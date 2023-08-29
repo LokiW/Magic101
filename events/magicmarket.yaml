@@ -1,0 +1,82 @@
+event:
+  name: "robe_store_awkward_silence"
+  prereqs: [["location.magicmarket"], ["location.robe_store"], ["time:intro"]]
+  description: "You stand in awkard silence with a few other students waiting to be measured for robes. To your right is <student.bully_1.physical_description>. To your left is <student.friendly_1.physical_description>."
+  options:
+    - text: "Wait silently for your turn."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "robe_store_fitting_finished"
+          chance: 50
+        - event_name: "robe_store_fitting_bad"
+          chance: 25
+        - event_name: "robe_store_jerk_1"
+          chance: 25
+    - text: "Try to make conversation with the student on your right."
+      effort_cost: 1
+      prereqs: [["!past_events.contains.robe_store_jerk_1"]]
+      next_events: 
+        - event_name: "robe_store_jerk_1"
+          chance: 100
+    - text: "Try to make conversation with the student on your left."
+      effort_cost: 1
+      prereqs: [[]]
+      next_events:
+        - event_name: "robe_store_friendly_1"
+          chance: 100
+    - text: "Crack a joke."
+      effort_cost: 2
+      effects: [["student.bully_1.opinion.increase"],["student.friendly_1.opinion.increase"]]
+      prereqs: [["character_trait.funny", "character_trait.charismatic"]]
+      next_events:
+        - event_name: "robe_store_friendly_all"
+          chance: 100
+
+
+event:
+  name: "robe_store_jerk_1"
+  prereqs: [["!past_events.robe_store_jerk_1"], ["location.magicmarket"], ["location.robe_store"], ["time:intro"]]
+  
+  description: >
+    The person next to you begins talking.
+    
+    "<student.bully_1.dialogue.insult>" they say 
+  options:
+    - text: "Punch them."
+      effort_cost: 1
+      effects: [["student.bully_1.opinion.increase"]]
+      prereqs: [[]]
+      next_events:
+        - event_name: "robe_store_jerk_1_punched"
+          chance: 50
+        - event_name: "robe_store_jerk_1_retaliates"
+          chance: 25
+        - event_name: "robe_store_caught_thrown_out"
+          chance: 25
+    - text: "Take the high ground and ignore them."
+      effort_cost: 2
+      prereqs: []
+      next_events:
+        - event_name: "robe_store_jerk_1_more_jerk"
+          chance: 25
+        - event_name: "robe_store_jerk_1_caught_scolded"
+          chance: 50
+        - event_name: "robe_store_jerk_1_caught_praised"
+          chance: 15
+        - event_name: "robe_store_awkward_silence"
+          chance: 10
+    - text: "Cry."
+      effort_cost: 0
+      prereqs: [[]]
+      effects: [["student.bully_1.opinion.decrease"]]
+      next_events:
+        - event_name: "robe_store_fitting_finished"
+          chance: 10
+        - event_name: "robe_store_fitting_bad"
+          chance: 60
+        - event_name: "robe_store_jerk_1_more_jerk"
+          chance: 10
+        - event_name: "robe_store_jerk_1_caught_scolded"
+          chance: 20
+
