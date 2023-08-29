@@ -19,7 +19,14 @@ def load_event_yamls():
 				raw_events = yaml.safe_load_all(file)
 				for e in raw_events:
 					if verify_event_yaml(e):
-						event_map[e['event']['name']] = Event(e['event'])
+						event_name = e['event']['name']
+						if event_name in event_map:
+							if event_map[event_name].is_initialized:
+								print("event "+event_name+"may be a duplicate, event already inloaded, skipping loading.")
+							else:
+								event_map[event_name].update(e['event'])
+						else:
+							event_map[event_name] = Event(e['event'])
 
 
 def verify_event_yaml(e_yaml):
@@ -53,28 +60,36 @@ def verify_event_yaml(e_yaml):
           spell_triggers: []
 	"""
 	if "event" not in e_yaml:
-		print("event yaml invalid, no 'event' header, skipping event: "+e_yaml)
+		print("event yaml invalid, no 'event' header, skipping event: "+str(e_yaml))
+
 		return False
 	e = e_yaml["event"]
 	if "name" not in e:
-		print("event yaml invalid, no 'name', skipping event: "+e_yaml)
+		print("event yaml invalid, no 'name', skipping event: "+str(e_yaml))
 		return False
+	event_name = e_yaml["event"]["name"]
 	if "prereqs" not in e:
-		print("event yaml invalid, no 'prereqs', skipping event: "+e_yaml)
+		print("event yaml invalid, no 'prereqs', skipping event: "+event_name)
 		return False
 	if "description" not in e:
-		print("event yaml invalid, no 'description', skipping event: "+e_yaml)
+		print("event yaml invalid, no 'description', skipping event: "+event_name)
 		return False
 	if "options" not in e:
-		print("event yaml invalid, no 'options', skipping event: "+e_yaml)
+		print("event yaml invalid, no 'options', skipping event: "+event_name)
 		return False
 	options = e["options"]
 	for option in e["options"]:
-		if "text" not in option or "effort_cost" not in option or "prereqs" not in option:
-			print("event yaml invalid, 'options' incorrect, skipping event: "+e_yaml)
+		if "text" not in option:
+			print("event yaml invalid, 'options' has no text, skipping event: "+event_name)
+		o_text = option["text"]
+		if "effort_cost" not in option or "prereqs" not in option:
+			print("event yaml invalid, 'option' "+o_text+" incorrect, skipping event: "+event_name)
 			return False
-		if "spell_event" not in option or "next_events" not in options:
-			print("event yaml invalid, 'options' incorrect, skipping event: "+e_yaml)
+		if "spell_event" not in option and "next_events" not in option:
+			print("event yaml invalid, 'option' "+o_text+" incorrect (must have spell_event or next_events), skipping event: "+event_name)
+			return False
+		if "spell_event" in option and "next_events" in option:
+			print("event yaml invalid, 'option' "+o_text+" incorrect (must not have both spell_event and next_events), skipping event: "+event_name)
 			return False
 
 	return True
