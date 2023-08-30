@@ -21,6 +21,11 @@ def main():
 
 def new_game():
 	load_event_yamls()
+	# TODO load characters
+	# TODO generate magic system
+
+	# choose player character
+	#TODO
 
 
 

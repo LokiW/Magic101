@@ -1,0 +1,107 @@
+event:
+  name: "recieve_school_acceptance"
+  prereqs: [[]]
+  description: >
+    On the outside of the scroll, your name is written in big loopy ink. When you open it, the scroll unfurls down to your waist. 
+    
+    Your placement for Magical University has been decided! You've been accepted to A'Taubra Lisnojana. Congradulations. Term begins as the Maple Leaves fall, please have all belongings ready in a Maple hollow by that time.
+    
+    You will need to chose your first term classes. The offerings and supply list are as follows-
+    
+  options:
+    - text: "Leave scroll and ignore it."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "transported_to_school_unwilling"
+          chance: 100
+    - text: "You're going to learn magic! Go to shopnfor school supplies."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events: 
+        - event_name: "magical_managerie_entrence"
+          chance: 100
+
+
+event:
+  name: "followed_by_scroll_1"
+  prereqs: [[]]
+  description: "You ignore the scroll and continue walking but after only a couple paces, you kick something. Looking down, you see its another scroll, as it rolls to a stop in front of you, you notice that your name is written on the outside. Looking back at the tree, there is no scroll in the hollow."
+  options:
+    - text: "Continue to ignore the scroll."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "followed_by_scroll_2"
+          chance: 100
+    - text: "Take the scroll."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events: 
+        - event_name: "recieve_school_acceptance"
+          chance: 100
+
+
+event:
+  name: "followed_by_scroll_2"
+  prereqs: [[]]
+  description: "You carefully step around the scroll and continue walking. Your walk continues normally until you sit down on a bench along the path. There is a crumpling noise as you sit on something that definely wasn't there a second ago. Reaching under you, you pull out a slightly flattened scroll. Your name is written on the outside and you can see a bit of tree moss dangling from the twine."
+  options:
+    - text: "Continue to ignore the scroll."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "greeted_by_cruel_instructor"
+          chance: 100
+    - text: "Take the scroll."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events: 
+        - event_name: "recieve_school_acceptance"
+          chance: 100
+
+
+event:
+  name: "greeted_by_cruel_instructor"
+  prereqs: [[]]
+  description: "A bit freaked out and possibly trying to convince yourself its a prank, you drop the scroll and leave the bench quickly behind. The scroll crosses your path three more times before you manage to make it home. When you are finally able to get inside and close the door behind you, you take a sigh of relief as no scrolls meet you inside. It is short lived however, as standing by the window inside your home, is a stranger in strange clothes.
+
+  \"Why have you been ignoring your acceptance letter?\" The stranger asks, turning to you. \"Doing so represents both a lack of wisdom and curiosity, I certainly hope you aren't in my classes. Unfortunately you must take some classes, you do know a magical education is required don't you?\"
+
+  The stranger doesn't give you a chance to respond to their sneering question.
+  \"Well, you'll find yourself at school come fall whether you or I would prefer otherwise, so you may as well prepare youself.\" The stranger tosses a crumpled scroll to your feet, and in the brief moment you are distractes by the paper l, they vanish."
+  options:
+    - text: "Continue to ignore the scroll."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "transported_to_school_unwilling"
+          chance: 100
+    - text: "Take the scroll."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events: 
+        - event_name: "recieve_school_acceptance"
+          chance: 100
+
+
+event:
+  name: "transported_to_school_unwilling"
+  prereqs: [[]]
+  description: "You've had an uneasy feeling since your encounter with the scroll, as if the trees and birds were watching you. Other than perhaps avoiding the outside more than usual to try to minimize the feeling, nothing else unusual has happened. You are at home, it is nearing the end of a dry Summer, and when you look outside you notice Maple leaves scattered accross the ground outside. As you watch, a small breeze ruffles some of the leaves so that they spin around each other gently. The breeze doesn't let up though, and the leaves don't fall back to the ground. Instead more and more leaves are picked up into the air as the breeze gets stronger and stronger. Your window begins to shake and then wit a wrenching noise, it is thrown open and the leaves rush inside, spiralling around you until you can no longer see the room past their whirlwind. Throwing your hands up to cover your face against their onslaught. Then, all of a sudden, the wind stops and the leaves fall to the ground at gound at your feet.
+
+   The only problem is, your feet are not inside. Bellow your feet is soft, mossy forest earth. The walls of your home are gone, replaced by towering trees and between the trees ahead of you, you can see a tall stone tower extending into the sky. All around it are smaller buildings, all of different kinds. One look made from weaving living trees together into a great sphere of branches and leaves. On the other side you can see rows and rows of long greenhouses extending down the south bank of a hill."
+  options:
+    - text: "Head towards the spire and its surrounding buildings."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "greeted_at_school"
+          chance: 100
+    - text: "Turn tail and run into the woods behind you."
+      effort_cost: 1
+      prereqs: [[]]
+      next_events: 
+        - event_name: "enter_magical_forest_first_time"
+          chance: 100
+

@@ -28,7 +28,7 @@ event:
     - text: "Crack a joke."
       effort_cost: 2
       effects: [["student.bully_1.opinion.increase"],["student.friendly_1.opinion.increase"]]
-      prereqs: [["character_trait.funny", "character_trait.charismatic"]]
+      prereqs: [["character.trait.Funny", "character.trait.Charismatic"]]
       next_events:
         - event_name: "robe_store_friendly_all"
           chance: 100
