@@ -1,6 +1,7 @@
 import os
 import yaml
 import json
+import random
 from characters.player import Player
 from error_handler import Error
 
@@ -16,6 +17,7 @@ class GameState:
 		self.characters = characters
 		self.magic_system = magic_system
 		self.seed = seed
+		self.rng = random.Random(seed)
 		self.options = options
 
 	def __repr__(self):

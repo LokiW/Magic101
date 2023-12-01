@@ -20,5 +20,5 @@ def display_event(event, game_state):
 		line = int(input())
 	
 	print(op_choice[line])	
-	game_state.current_event = op_choice[line].get_next_event()
+	game_state.current_event = op_choice[line].get_next_event(game_state)
 	print(game_state.current_event.name)

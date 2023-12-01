@@ -49,8 +49,8 @@ class Option:
 					event_map[e["event_name"]] = Event(name=e["event_name"])
 				self.next_events.append([e["chance"], event_map[e["event_name"]]])
 
-	def get_next_event(self):
-		percent = 0 #TODO
+	def get_next_event(self, game_state):
+		percent = game_state.rng.randrange(0,99)
 		current_chance = 0
 		for event in self.next_events:
 			if not event[1].is_initialized:
