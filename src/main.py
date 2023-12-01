@@ -2,7 +2,8 @@ import os
 
 from event_handler.load_events import load_event_yamls
 from display.command_line import display_event
-from game_state import GameState
+from game_state.game_state import GameState
+from game_state.load_default_yamls import load_options
 from characters.player import Player
 from error_handler import Error
 
@@ -45,8 +46,8 @@ def new_game():
 
 	#TODO seed
 	seed = "traditional"
-	#TODO select starting options
-	options = []
+
+	options = load_options()
 	
 	return GameState(player, current_event, current_location, characters, magic_system, seed, options)
 
