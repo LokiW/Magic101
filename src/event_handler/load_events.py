@@ -4,11 +4,11 @@ import yaml
 from event_handler.events import Event
 
 
-event_map = {}
 event_dir_pathname = "/events"
-excluded_files = {"event_format_example.yaml"}
+excluded_files = "event_format_example.yaml"
 
 def load_event_yamls():
+	event_map = {}
 	root_dir = os.getcwd() + event_dir_pathname
 	for filepath in os.listdir(root_dir):
 		if filepath in excluded_files or not filepath.endswith(".yaml"):
@@ -24,9 +24,10 @@ def load_event_yamls():
 							if event_map[event_name].is_initialized:
 								print("event "+event_name+"may be a duplicate, event already inloaded, skipping loading.")
 							else:
-								event_map[event_name].update(e['event'])
+								event_map[event_name].update(e['event'], event_map)
 						else:
-							event_map[event_name] = Event(e['event'])
+							event_map[event_name] = Event(event=e['event'], event_map=event_map)
+	return event_map
 
 
 def verify_event_yaml(e_yaml):

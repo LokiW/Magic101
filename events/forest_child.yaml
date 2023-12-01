@@ -1,0 +1,49 @@
+event:
+  name: "followed_by_scroll_1"
+  prereqs: [["option.forest_child.enabled"]]
+  description: "You ignore the scroll and continue walking but after only a couple paces, you kick something. Looking down, you see its another scroll, as it rolls to a stop in front of you, you notice that your name is written on the outside. Looking back at the tree, there is no scroll in the hollow."
+  options:
+    - text: "Continue to ignore the scroll."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "followed_by_scroll_2"
+          chance: 100
+    - text: "Take the scroll."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events: 
+        - event_name: "recieve_school_acceptance"
+          chance: 100
+
+
+event:
+  name: "followed_by_scroll_2"
+  prereqs: [["option.forest_child.enabled"]]
+  description: "You carefully step around the scroll and continue walking. Your walk continues normally until you sit down on a bench along the path. There is a crumpling noise as you sit on something that definely wasn't there a second ago. Reaching under you, you pull out a slightly flattened scroll. Your name is written on the outside and you can see a bit of tree moss dangling from the twine."
+  options:
+    - text: "Continue to ignore the scroll."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "greeted_by_cruel_instructor"
+          chance: 100
+    - text: "Take the scroll."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events: 
+        - event_name: "recieve_school_acceptance"
+          chance: 100
+
+
+event:
+  name: "greeted_by_cruel_instructor"
+  prereqs: [["option.forest_child.enabled"]]
+  description: "A bit freaked out and possibly trying to convince yourself its a prank, you drop the scroll and leave the bench quickly behind. The scroll crosses your path three more times before you manage to make it home. When you are finally able to get inside and close the door behind you, you take a sigh of relief as no scrolls meet you inside. It is short lived however, as standing by the window inside your home, is a stranger in strange clothes.
+
+  \"Why have you been ignoring your acceptance letter?\" The stranger asks, turning to you. \"Doing so represents both a lack of wisdom and curiosity, I certainly hope you aren't in my classes. Unfortunately you must take some classes, you do know a magical education is required don't you?\"
+
+  The stranger doesn't give you a chance to respond to their sneering question.
+  \"Well, you'll find yourself at school come fall whether you or I would prefer otherwise, so you may as well prepare youself.\" The stranger tosses a crumpled scroll to your feet, and in the brief moment you are distractes by the paper l, they vanish."
+  options:
+    - text: "Continue to ignore the scroll."

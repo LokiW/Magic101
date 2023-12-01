@@ -2,12 +2,12 @@ from event_handler.func_handlers import Prereqs, Effects
 
 
 class Event:
-	def __init__(self, event, event_map):
-		self.update(event, event_map)
-
-	def __init__(self, name):
-		self.name = name
-		self.is_initialized = False
+	def __init__(self, name="", event={}, event_map={}):
+		if not event:
+			self.name = name
+			self.is_initialized = False
+		else:
+			self.update(event, event_map)
 
 	def update(self, event, event_map):
 		self.name = event["name"]
@@ -17,7 +17,7 @@ class Event:
 
 		self.options = []
 		for option in event["options"]:
-			self.options.add(Option(option, event_map))
+			self.options.append(Option(option, event_map))
 		self.is_initialized = True
 
 
@@ -29,7 +29,7 @@ class Option:
 		self.has_effects = "effects" in option and not option["effects"]
 		if self.has_effects:
 			self.effects = Effects(option["effects"])
-		self.prereqs = Prereqs(option["Prereqs"])
+		self.prereqs = Prereqs(option["prereqs"])
 
 		self.is_spell_option = "spell_event" in option
 		if self.is_spell_option:
@@ -45,5 +45,5 @@ class Option:
 				self.next_events = []
 				if e["event_name"] not in event_map:
 					event_map[e["event_name"]] = Event(name=e["event_name"])
-				self.next_events.add(e["chance"], event_map[e["event_name"]])
+				self.next_events.append({e["chance"], event_map[e["event_name"]]})
 

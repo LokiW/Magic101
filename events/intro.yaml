@@ -2,106 +2,85 @@ event:
   name: "recieve_school_acceptance"
   prereqs: [[]]
   description: >
-    On the outside of the scroll, your name is written in big loopy ink. When you open it, the scroll unfurls down to your waist. 
+    On the outside of the scroll, your name is written in big loopy ink. When you open it, the scroll unfurls down to your waist. There is a thud as something falls out of the scroll to the ground. It is a heavy silver coin with a hole in the center and strange runes carved roughly around the edge. The scroll reads, in big loopy writting hand inked onto the thick paper -
     
     Your placement for Magical University has been decided! You've been accepted to A'Taubra Lisnojana. Congradulations. Term begins as the Maple Leaves fall, please have all belongings ready in a Maple hollow by that time.
     
     You will need to chose your first term classes. The offerings and supply list are as follows-
+
+    One wand, septer or staff
+    Robes of any style - Note any robes showing legs must be worn with breeches. Other lower garments are not permitted.
+    Cauldron - Cast Iron, Copper or Brass, Silver not recommended for inexperienced brewers.
+
+    To reach the market, find any wishing well and toss in the provided coin. Only one coin is provided so make sure to bring enough to obtain all desired items.
     
   options:
     - text: "Leave scroll and ignore it."
       effort_cost: 0
-      prereqs: [[]]
+      prereqs: [["option.forest_child.enabled"]]
       next_events:
         - event_name: "transported_to_school_unwilling"
           chance: 100
-    - text: "You're going to learn magic! Go to shopnfor school supplies."
+    - text: "You're going to learn magic? Is this a prank? Sheepishly find a wishing well."
       effort_cost: 0
       prereqs: [[]]
       next_events: 
-        - event_name: "magical_managerie_entrence"
+        - event_name: "magical_market_entrence"
+          chance: 100
+    - text: "You're going to learn magic! Collect some money and go find a wishing well."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events: 
+        - event_name: "magical_market_entrence"
           chance: 100
 
 
 event:
-  name: "followed_by_scroll_1"
+  name: "wishing_well_confident"
   prereqs: [[]]
-  description: "You ignore the scroll and continue walking but after only a couple paces, you kick something. Looking down, you see its another scroll, as it rolls to a stop in front of you, you notice that your name is written on the outside. Looking back at the tree, there is no scroll in the hollow."
+  description: >
+    You gather up what you hope will be enough money for your school supplies and make your way towards a fountain. It is not labeled as a wishing well but there are a few coins scattered around the bottom of the pool. You take the heavy silver coin and toss it into the well wishing to arrive at the magical marketplace. The water in the fountain suddenly stops in place. It isn't frozen like ice, but the water is suspended in the air, unmoving. The drops of water that splashed out from where the fountain hit the pool are suspended in place. Looking around everything is frozen. The birds still in the sky above you, the leaves of a nearby tree bent mid breeze but unmoving. Then the pool of the fountain begins to spin and the water emits a strange glowing light. You step over the edge of the fountain into the water which parts out of the way of your feet. The glowing water then rises slowly around you, forming a whirling column of glowing water obstructing the world from view. 
+
+    With a sudden splash, the water falls back to the ground but as you look around, you are no longer next to the fountain where you threw the coin.
+
   options:
-    - text: "Continue to ignore the scroll."
+    - text: "continue"
       effort_cost: 0
       prereqs: [[]]
       next_events:
-        - event_name: "followed_by_scroll_2"
-          chance: 100
-    - text: "Take the scroll."
-      effort_cost: 0
-      prereqs: [[]]
-      next_events: 
-        - event_name: "recieve_school_acceptance"
+        - event_name: "magical_market_entrence"
           chance: 100
 
 
 event:
-  name: "followed_by_scroll_2"
+  name: "wishing_well_unsure"
   prereqs: [[]]
-  description: "You carefully step around the scroll and continue walking. Your walk continues normally until you sit down on a bench along the path. There is a crumpling noise as you sit on something that definely wasn't there a second ago. Reaching under you, you pull out a slightly flattened scroll. Your name is written on the outside and you can see a bit of tree moss dangling from the twine."
+  description: "You think you recall the location of a fountain, and you gather the coin and scroll and make your way towards it. It is not labeled as a wishing well but there are a few coins scattered around the bottom of the pool. You take the heavy silver coin, and feeling a bit foolish, toss it into the water. Supposing you are supposed to make a wish, you wish that magic was real, then feeling foolish you turn to scurry away from the fountain before you can be disapointed. As you turn, however, you notice something odd. The gentle summer breeze had suddenly died, but the nearby tree is still bent at an odd angle as if being blown. Except all the leaves are perfectly and unnaturally still. There is a bird that had just jumped from it's branches band although it is completely free of the branch it is stopped in middair. Spinning around you, everything is still, when you look back at the fountain, the water is stopped in place. It isn't frozen like ice, but stuck in the air, unmoving. The drops of water that splashed out from where the fountain hit the pool are suspended in place.
+
+As you watch, the pool of the fountain begins to spin and the water emits a strange glowing light. The glow increases as the water changes to a shade of crystal blue. 
+
+    With a sudden splash, the water falls back to the ground but as you look around, you are no longer next to the fountain where you threw the coin."
+ 
   options:
-    - text: "Continue to ignore the scroll."
+    - text: ""
       effort_cost: 0
       prereqs: [[]]
       next_events:
-        - event_name: "greeted_by_cruel_instructor"
-          chance: 100
-    - text: "Take the scroll."
-      effort_cost: 0
-      prereqs: [[]]
-      next_events: 
-        - event_name: "recieve_school_acceptance"
+        - event_name: "magical_market_entrence"
           chance: 100
 
 
 event:
-  name: "greeted_by_cruel_instructor"
+  name: "magical_market_entrence"
   prereqs: [[]]
-  description: "A bit freaked out and possibly trying to convince yourself its a prank, you drop the scroll and leave the bench quickly behind. The scroll crosses your path three more times before you manage to make it home. When you are finally able to get inside and close the door behind you, you take a sigh of relief as no scrolls meet you inside. It is short lived however, as standing by the window inside your home, is a stranger in strange clothes.
+  description: <
+    All around you is a mish-mash of cobbled stone and ancient forest, bustling with colorfully dressed people almost all in various kinds of robes and most wearing tall pointed hats. Buildings of all sorts weave in and around giant trees, some trees growing completely around the roofs, their roots curling around the buildings befoer diving into the earth. Little shops with peaked roofs, shingled in old wood. Stone towers spiraling into the canopy of leaves above you. Steeples jutting at impossible angles, some dangling over the rough stone pathway where people walk to and from shops. Little paths jut out between buildings and you can see even more little shops deeper into the forest.
 
-  \"Why have you been ignoring your acceptance letter?\" The stranger asks, turning to you. \"Doing so represents both a lack of wisdom and curiosity, I certainly hope you aren't in my classes. Unfortunately you must take some classes, you do know a magical education is required don't you?\"
-
-  The stranger doesn't give you a chance to respond to their sneering question.
-  \"Well, you'll find yourself at school come fall whether you or I would prefer otherwise, so you may as well prepare youself.\" The stranger tosses a crumpled scroll to your feet, and in the brief moment you are distractes by the paper l, they vanish."
   options:
-    - text: "Continue to ignore the scroll."
+    - text: ""
       effort_cost: 0
       prereqs: [[]]
       next_events:
-        - event_name: "transported_to_school_unwilling"
-          chance: 100
-    - text: "Take the scroll."
-      effort_cost: 0
-      prereqs: [[]]
-      next_events: 
-        - event_name: "recieve_school_acceptance"
-          chance: 100
-
-
-event:
-  name: "transported_to_school_unwilling"
-  prereqs: [[]]
-  description: "You've had an uneasy feeling since your encounter with the scroll, as if the trees and birds were watching you. Other than perhaps avoiding the outside more than usual to try to minimize the feeling, nothing else unusual has happened. You are at home, it is nearing the end of a dry Summer, and when you look outside you notice Maple leaves scattered accross the ground outside. As you watch, a small breeze ruffles some of the leaves so that they spin around each other gently. The breeze doesn't let up though, and the leaves don't fall back to the ground. Instead more and more leaves are picked up into the air as the breeze gets stronger and stronger. Your window begins to shake and then wit a wrenching noise, it is thrown open and the leaves rush inside, spiralling around you until you can no longer see the room past their whirlwind. Throwing your hands up to cover your face against their onslaught. Then, all of a sudden, the wind stops and the leaves fall to the ground at gound at your feet.
-
-   The only problem is, your feet are not inside. Bellow your feet is soft, mossy forest earth. The walls of your home are gone, replaced by towering trees and between the trees ahead of you, you can see a tall stone tower extending into the sky. All around it are smaller buildings, all of different kinds. One look made from weaving living trees together into a great sphere of branches and leaves. On the other side you can see rows and rows of long greenhouses extending down the south bank of a hill."
-  options:
-    - text: "Head towards the spire and its surrounding buildings."
-      effort_cost: 0
-      prereqs: [[]]
-      next_events:
-        - event_name: "greeted_at_school"
-          chance: 100
-    - text: "Turn tail and run into the woods behind you."
-      effort_cost: 1
-      prereqs: [[]]
-      next_events: 
-        - event_name: "enter_magical_forest_first_time"
+        - event_name: ""
           chance: 100
 

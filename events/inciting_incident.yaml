@@ -5,7 +5,7 @@ event:
   options:
     - text: "It is probably meant for someone else. Leave the scroll and keep walking."
       effort_cost: 0
-      prereqs: [[]]
+      prereqs: [["option.forest_child.enabled"]]
       next_events:
         - event_name: "followed_by_scroll_1"
           chance: 100
