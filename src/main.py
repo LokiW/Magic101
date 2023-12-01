@@ -2,11 +2,15 @@ import os
 
 from event_handler.load_events import load_event_yamls
 from display.command_line import display_event
+from display.command_line import display_menu
 from game_state.game_state import GameState
 from game_state.load_default_yamls import load_options
 from characters.player import Player
 from error_handler import Error
 
+
+
+REREQUEST = "m@g!c_v@1u3_us3r_!nput"
 
 def main():
 	Error.reset()
@@ -72,9 +76,40 @@ def load_game():
 
 def play(game_state):
 	# TODO how to exit game lol
-	while True:
-		display_event(game_state.current_event, game_state)
+	while game_state.ready:
 		game_state.save()
+		valid_inputs, state_change = display_event(game_state.current_event, game_state)
+		user_input = process_input(game_state, valid_inputs)
+		if user_input != REREQUEST:
+			state_change(user_input)
+
+
+def process_input(game_state, valid_inputs):
+	#try:
+	line = str(input())
+	if line in {"m", "menu"}:
+		menu_options, state_change = display_menu(game_state)
+		selection = process_input(game_state, menu_options)
+		state_change(selection)
+		return REREQUEST
+
+	if isinstance(list(valid_inputs)[0], int):
+		try:
+			int_line = int(line)
+		except:
+			display_invalid()
+			return process_input(game_state, valid_inputs)
+		if int_line in valid_inputs:
+			return int(line)
+	elif line in valid_inputs:
+			return line
+
+	display_invalid()
+	return process_input(game_state, valid_inputs)
+
+
+def display_invalid():
+	print("invalid input, try again:")
 
 
 if __name__ == "__main__":

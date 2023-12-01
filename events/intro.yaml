@@ -17,7 +17,7 @@ recieve_school_acceptance:
   options:
     - text: "Leave scroll and ignore it."
       effort_cost: 0
-      prereqs: [["option.forest_child.enabled"]]
+      prereqs: [["options['forest_child']['enabled']"]]
       next_events:
         - event_name: "transported_to_school_unwilling"
           chance: 100

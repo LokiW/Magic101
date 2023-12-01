@@ -19,6 +19,7 @@ class GameState:
 		self.seed = seed
 		self.rng = random.Random(seed)
 		self.options = options
+		self.ready = True
 
 	def __repr__(self):
 		reprd = {}
