@@ -1,5 +1,6 @@
 #Project Speciics
 error_log.txt
+save_files/*.yaml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
