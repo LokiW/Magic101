@@ -1,4 +1,6 @@
 from event_handler.func_handlers import Prereqs, Effects
+from error_handler import Error
+
 
 
 class Event:
@@ -45,5 +47,17 @@ class Option:
 				self.next_events = []
 				if e["event_name"] not in event_map:
 					event_map[e["event_name"]] = Event(name=e["event_name"])
-				self.next_events.append({e["chance"], event_map[e["event_name"]]})
+				self.next_events.append([e["chance"], event_map[e["event_name"]]])
 
+	def get_next_event(self):
+		percent = 0 #TODO
+		current_chance = 0
+		for event in self.next_events:
+			if not event[1].is_initialized:
+				#TODO error handling
+				Error.logln("Error: event %s is uninitialized" % (event[1].name))
+				continue
+			current_chance += event[0]
+			Error.logln(str(current_chance))
+			if percent < current_chance: #TODO check for off by one
+				return event[1]

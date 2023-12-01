@@ -1,9 +1,11 @@
 from event_handler.load_events import load_event_yamls
 from display.command_line import display_event
 from game_state import GameState
+from error_handler import Error
 
 
 def main():
+	Error.reset()
 	cont = True
 	while(cont):
 		print("Start New Game: s / start ")

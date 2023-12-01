@@ -1,4 +1,4 @@
-event:
+followed_by_scroll_1:
   name: "followed_by_scroll_1"
   prereqs: [["option.forest_child.enabled"]]
   description: "You ignore the scroll and continue walking but after only a couple paces, you kick something. Looking down, you see its another scroll, as it rolls to a stop in front of you, you notice that your name is written on the outside. Looking back at the tree, there is no scroll in the hollow."
@@ -17,7 +17,7 @@ event:
           chance: 100
 
 
-event:
+followed_by_scroll_2:
   name: "followed_by_scroll_2"
   prereqs: [["option.forest_child.enabled"]]
   description: "You carefully step around the scroll and continue walking. Your walk continues normally until you sit down on a bench along the path. There is a crumpling noise as you sit on something that definely wasn't there a second ago. Reaching under you, you pull out a slightly flattened scroll. Your name is written on the outside and you can see a bit of tree moss dangling from the twine."
@@ -36,7 +36,7 @@ event:
           chance: 100
 
 
-event:
+greeted_by_cruel_instructor:
   name: "greeted_by_cruel_instructor"
   prereqs: [["option.forest_child.enabled"]]
   description: "A bit freaked out and possibly trying to convince yourself its a prank, you drop the scroll and leave the bench quickly behind. The scroll crosses your path three more times before you manage to make it home. When you are finally able to get inside and close the door behind you, you take a sigh of relief as no scrolls meet you inside. It is short lived however, as standing by the window inside your home, is a stranger in strange clothes.

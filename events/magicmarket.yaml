@@ -1,4 +1,4 @@
-event:
+robe_store_awkward_silence:
   name: "robe_store_awkward_silence"
   prereqs: [["location.magicmarket"], ["location.robe_store"], ["time:intro"]]
   description: "You stand in awkard silence with a few other students waiting to be measured for robes. To your right is <student.bully_1.physical_description>. To your left is <student.friendly_1.physical_description>."
@@ -34,7 +34,7 @@ event:
           chance: 100
 
 
-event:
+robe_store_jerk_1:
   name: "robe_store_jerk_1"
   prereqs: [["!past_events.robe_store_jerk_1"], ["location.magicmarket"], ["location.robe_store"], ["time:intro"]]
   

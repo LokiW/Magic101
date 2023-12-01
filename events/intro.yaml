@@ -1,8 +1,8 @@
-event:
+recieve_school_acceptance:
   name: "recieve_school_acceptance"
   prereqs: [[]]
   description: >
-    On the outside of the scroll, your name is written in big loopy ink. When you open it, the scroll unfurls down to your waist. There is a thud as something falls out of the scroll to the ground. It is a heavy silver coin with a hole in the center and strange runes carved roughly around the edge. The scroll reads, in big loopy writting hand inked onto the thick paper -
+    On the outside of the scroll, your name is written in big loopy ink. When you open it, the scroll unfurls down to your waist. There is a thud as something falls out of the scroll to the ground. It is a heavy silver coin with a hole in the center and strange runes carved roughly around the edge. The scroll reads, in big loopy writting hand inked onto the thick paper -\n
     
     Your placement for Magical University has been decided! You've been accepted to A'Taubra Lisnojana. Congradulations. Term begins as the Maple Leaves fall, please have all belongings ready in a Maple hollow by that time.
     
@@ -35,7 +35,7 @@ event:
           chance: 100
 
 
-event:
+wishing_well_confident:
   name: "wishing_well_confident"
   prereqs: [[]]
   description: >
@@ -52,7 +52,7 @@ event:
           chance: 100
 
 
-event:
+wishing_well_unsure:
   name: "wishing_well_unsure"
   prereqs: [[]]
   description: "You think you recall the location of a fountain, and you gather the coin and scroll and make your way towards it. It is not labeled as a wishing well but there are a few coins scattered around the bottom of the pool. You take the heavy silver coin, and feeling a bit foolish, toss it into the water. Supposing you are supposed to make a wish, you wish that magic was real, then feeling foolish you turn to scurry away from the fountain before you can be disapointed. As you turn, however, you notice something odd. The gentle summer breeze had suddenly died, but the nearby tree is still bent at an odd angle as if being blown. Except all the leaves are perfectly and unnaturally still. There is a bird that had just jumped from it's branches band although it is completely free of the branch it is stopped in middair. Spinning around you, everything is still, when you look back at the fountain, the water is stopped in place. It isn't frozen like ice, but stuck in the air, unmoving. The drops of water that splashed out from where the fountain hit the pool are suspended in place.
@@ -70,10 +70,10 @@ As you watch, the pool of the fountain begins to spin and the water emits a stra
           chance: 100
 
 
-event:
+magical_market_entrence:
   name: "magical_market_entrence"
   prereqs: [[]]
-  description: <
+  description: >
     All around you is a mish-mash of cobbled stone and ancient forest, bustling with colorfully dressed people almost all in various kinds of robes and most wearing tall pointed hats. Buildings of all sorts weave in and around giant trees, some trees growing completely around the roofs, their roots curling around the buildings befoer diving into the earth. Little shops with peaked roofs, shingled in old wood. Stone towers spiraling into the canopy of leaves above you. Steeples jutting at impossible angles, some dangling over the rough stone pathway where people walk to and from shops. Little paths jut out between buildings and you can see even more little shops deeper into the forest.
 
   options:

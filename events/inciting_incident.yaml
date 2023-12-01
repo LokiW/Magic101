@@ -1,4 +1,4 @@
-event:
+inciting_incident:
   name: "inciting_incident"
   prereqs: [[]]
   description: "You are walking by a large old tree when something catches your attention. Upon closer inspection, you find a thick scroll of brown paper wrapped in twine in a hollow in the trunk of the tree."
