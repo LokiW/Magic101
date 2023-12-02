@@ -23,12 +23,12 @@ class Event:
 		self.is_initialized = True
 
 
-
 class Option:
 	def __init__(self, option, event_map):
 		self.text = option["text"]
 		self.effort = option["effort_cost"]
-		self.has_effects = "effects" in option and not option["effects"]
+		self.has_effects = "effects" in option and option["effects"]
+		Error.logln("option has effects: "+str(option.get("effects")))
 		if self.has_effects:
 			self.effects = Effects(option["effects"])
 		self.prereqs = Prereqs(option["prereqs"])
@@ -58,6 +58,6 @@ class Option:
 				Error.logln("Error: event %s is uninitialized" % (event[1].name))
 				continue
 			current_chance += event[0]
-			Error.logln(str(current_chance))
+			Error.logln("chose event because: "+str(percent)+"<"+str(current_chance))
 			if percent < current_chance: #TODO check for off by one
 				return event[1]

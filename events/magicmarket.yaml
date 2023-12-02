@@ -1,6 +1,6 @@
 robe_store_awkward_silence:
   name: "robe_store_awkward_silence"
-  prereqs: [["location.magicmarket"], ["location.robe_store"], ["time:intro"]]
+  prereqs: [["current_location.contains('magicmarket')"], ["current_location.contains('robe_store')"], ["time:intro"]]
   description: "You stand in awkard silence with a few other students waiting to be measured for robes. To your right is <student.bully_1.physical_description>. To your left is <student.friendly_1.physical_description>."
   options:
     - text: "Wait silently for your turn."
@@ -27,7 +27,7 @@ robe_store_awkward_silence:
           chance: 100
     - text: "Crack a joke."
       effort_cost: 2
-      effects: [["student.bully_1.opinion.increase"],["student.friendly_1.opinion.increase"]]
+      effects: ["student.bully_1.opinion.increase", "student.friendly_1.opinion.increase"]
       prereqs: [["character.trait.Funny", "character.trait.Charismatic"]]
       next_events:
         - event_name: "robe_store_friendly_all"
@@ -36,7 +36,7 @@ robe_store_awkward_silence:
 
 robe_store_jerk_1:
   name: "robe_store_jerk_1"
-  prereqs: [["!past_events.robe_store_jerk_1"], ["location.magicmarket"], ["location.robe_store"], ["time:intro"]]
+  prereqs: [["past_events.contains(robe_store_jerk_1) == False"], ["current_location.contains('magicmarket')"], ["current_location.contains('robe_store')"], ["time.contains('intro')"]]
   
   description: >
     The person next to you begins talking.
@@ -45,7 +45,7 @@ robe_store_jerk_1:
   options:
     - text: "Punch them."
       effort_cost: 1
-      effects: [["student.bully_1.opinion.increase"]]
+      effects: ["student.bully_1.opinion.increase"]
       prereqs: [[]]
       next_events:
         - event_name: "robe_store_jerk_1_punched"
@@ -69,7 +69,7 @@ robe_store_jerk_1:
     - text: "Cry."
       effort_cost: 0
       prereqs: [[]]
-      effects: [["student.bully_1.opinion.decrease"]]
+      effects: ["student.bully_1.opinion.decrease"]
       next_events:
         - event_name: "robe_store_fitting_finished"
           chance: 10

@@ -27,9 +27,14 @@ class Prereqs:
 
 class Effects:
 	def __init__(self, effects):
-		#TODO
-		self.effects = [[]]
+		self.effects = effects
 
 	def execute_effects(self, game_state):
-		#TODO
-		num_effect_lists = len(self.effects)
+		for effect in self.effects:
+			#TODO
+			func = "game_state."+effect
+			try:
+				exec(func)
+			except Exception as e:
+				Error.logln("Unable to apply effect: "+effect)
+				Error.logln(str(e))

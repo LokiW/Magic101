@@ -47,7 +47,7 @@ def verify_event_yaml(e):
   options:
     - text: ""
       effort_cost: 0
-      effects: [[]]
+      effects: []
       prereqs: [[]]
       next_events:
         - event_name: ""

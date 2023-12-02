@@ -5,6 +5,7 @@ from display.command_line import display_event
 from display.command_line import display_menu
 from game_state.game_state import GameState
 from game_state.load_default_yamls import load_options
+from game_state.location import Location
 from characters.player import Player
 from error_handler import Error
 
@@ -36,8 +37,8 @@ def main():
 def new_game():
 	event_map = load_event_yamls()
 	current_event = event_map["inciting_incident"]
-	#TODO
-	current_location = None 
+
+	current_location = Location({"start"}) 
 	# TODO load characters
 	characters = None
 	# TODO generate magic system
@@ -96,7 +97,7 @@ def process_input(game_state, valid_inputs):
 		state_change(selection)
 		return REREQUEST
 
-	if isinstance(list(valid_inputs)[0], int):
+	if valid_inputs and isinstance(list(valid_inputs)[0], int):
 		try:
 			int_line = int(line)
 		except:

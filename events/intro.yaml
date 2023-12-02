@@ -25,13 +25,13 @@ recieve_school_acceptance:
       effort_cost: 0
       prereqs: [[]]
       next_events: 
-        - event_name: "magical_market_entrence"
+        - event_name: "wishing_well_unsure"
           chance: 100
     - text: "You're going to learn magic! Collect some money and go find a wishing well."
       effort_cost: 0
       prereqs: [[]]
       next_events: 
-        - event_name: "magical_market_entrence"
+        - event_name: "wishing_well_confident"
           chance: 100
 
 
@@ -47,6 +47,7 @@ wishing_well_confident:
     - text: "continue"
       effort_cost: 0
       prereqs: [[]]
+      effects: ["current_location.set_location('magicmarket')"]
       next_events:
         - event_name: "magical_market_entrence"
           chance: 100
@@ -65,6 +66,7 @@ As you watch, the pool of the fountain begins to spin and the water emits a stra
     - text: ""
       effort_cost: 0
       prereqs: [[]]
+      effects: ["current_location.set_location('magicmarket')"]
       next_events:
         - event_name: "magical_market_entrence"
           chance: 100

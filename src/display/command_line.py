@@ -1,4 +1,5 @@
 import os
+from error_handler import Error
 
 
 def display_event(event, game_state):
@@ -14,7 +15,12 @@ def display_event(event, game_state):
 			op_num += 1
 
 	def output(selection):
-		game_state.current_event = op_choice[selection].get_next_event(game_state)
+		option = op_choice[selection]
+		Error.log("Has effect:   ")
+		Error.logln(str(option.has_effects))
+		if option.has_effects:
+			option.effects.execute_effects(game_state)
+		game_state.current_event = option.get_next_event(game_state)
 
 	# valid input options and func to call with input
 	return op_choice.keys(), output

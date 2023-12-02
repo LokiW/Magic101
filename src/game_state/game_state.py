@@ -3,6 +3,7 @@ import yaml
 import json
 import random
 from characters.player import Player
+from game_state.location import Location
 from error_handler import Error
 
 
@@ -24,6 +25,7 @@ class GameState:
 	def __repr__(self):
 		reprd = {}
 		reprd['player'] = self.player.__repr__()
+		reprd['current_location'] = self.current_location.__repr__()
 		reprd['current_event_name'] = self.current_event.name
 		reprd['seed'] = self.seed
 		#TODO the rest
@@ -39,11 +41,16 @@ class GameState:
 
 	def load(file_name, event_map, default_options):
 		save_file = open(file_path+file_name, "r")
+
 		load_info = json.loads(yaml.safe_load(save_file))
+
 		player_dict = json.loads(load_info['player'])
 		player = Player(player_dict["name"])
+
 		current_event = event_map[load_info['current_event_name']]
-		current_location = None
+
+		current_location = Location(set(json.loads(load_info['current_location'])))
+
 		characters = None
 		magic_system = None
 		seed = load_info['seed']
