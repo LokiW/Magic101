@@ -37,7 +37,7 @@ class GameState:
 		yaml.safe_dump(self.__repr__(), self.save_file)
 		self.save_file.close()
 
-	def load(file_name, event_map):
+	def load(file_name, event_map, default_options):
 		save_file = open(file_path+file_name, "r")
 		load_info = json.loads(yaml.safe_load(save_file))
 		player_dict = json.loads(load_info['player'])
@@ -47,5 +47,7 @@ class GameState:
 		characters = None
 		magic_system = None
 		seed = load_info['seed']
-		options = None
+		# loaded options override any values in default options if in this order
+		# options = {**default_options, **json.loads(load_info['options'])}
+		options = default_options
 		return GameState(player, current_event, current_location, characters, magic_system, seed, options)

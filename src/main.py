@@ -71,7 +71,10 @@ def load_game():
 		print("Please select a number for the file to load:")
 		selection = int(input())
 	event_map = load_event_yamls()
-	return GameState.load(file_map[selection], event_map)
+
+	default_options = load_options()
+
+	return GameState.load(file_map[selection], event_map, default_options)
 
 
 def play(game_state):
