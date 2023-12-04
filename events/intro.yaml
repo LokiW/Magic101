@@ -30,6 +30,7 @@ recieve_school_acceptance:
     - text: "You're going to learn magic! Collect some money and go find a wishing well."
       effort_cost: 0
       prereqs: [[]]
+      effects: ["player.inventory.add_quantity(name='money',quantity=50)"]
       next_events: 
         - event_name: "wishing_well_confident"
           chance: 100

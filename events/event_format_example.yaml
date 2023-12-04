@@ -1,6 +1,7 @@
 event:
   name: ""
   prereqs: [[]]
+  event_type: ""
   description: ""
   options:
     - text: ""
@@ -18,12 +19,4 @@ event:
       next_events: 
         - event_name: ""
           chance: 100
-    - text: ""
-      effort_cost: 0
-      prereqs: [[]]
-      max_casting: 0
-      spell_event:
-        - event_name: ""
-          spell_triggers: []
-
 

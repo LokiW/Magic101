@@ -1,10 +1,20 @@
 import os
+import re
 from error_handler import Error
 
 
 def display_event(event, game_state):
 	os.system('clear')
+	if event.type == "user_input_event":
+		return display_user_input_event(event, game_state)
+	elif event.type == "spell_event":
+		return display_spell_event(event, game_state)
+	else:
+		return display_default_event(event, game_state)
+
+def display_default_event(event, game_state):
 	print(event.desc)
+	game_state.previous_events.add(event.name)
 
 	op_num = 1
 	op_choice = {}
@@ -16,12 +26,12 @@ def display_event(event, game_state):
 
 	def output(selection):
 		option = op_choice[selection]
-		Error.log("Has effect:   ")
-		Error.logln(str(option.has_effects))
 		if option.has_effects:
 			option.effects.execute_effects(game_state)
 		game_state.current_event = option.get_next_event(game_state)
+	Error.logln(str(op_choice))
 
+	Error.logln(str(output))
 	# valid input options and func to call with input
 	return op_choice.keys(), output
 
@@ -47,3 +57,37 @@ def display_menu(game_state):
 
 	menu_choice = quit_choice | continue_choice | save_choice
 	return menu_choice, output
+
+
+
+def display_user_input_event(event, game_state):
+	print(event.desc)
+	game_state.previous_events.add(event.name)
+
+	def output(user_input):
+		game_state.last_user_input = user_input
+		op_choice = (-1, None)
+		for option in event.options:
+			if option and option.prereqs.meets_prereqs(game_state):
+				if option.priority > op_choice[0]:
+					op_choice = (option.priority, option)
+
+		option = op_choice[1]
+		if not option:
+			Error.logln("No valid next event after user input event: "+event.name)
+			return
+
+		if option.has_effects:
+			option.effects.execute_effects(game_state)
+		game_state.current_event = option.get_next_event(game_state)
+
+
+
+def display_spell_event(event, game_state):
+	#TODO
+	return
+
+
+def display_inventory(game_state):
+	# TODO
+	return

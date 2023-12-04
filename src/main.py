@@ -79,7 +79,6 @@ def load_game():
 
 
 def play(game_state):
-	# TODO how to exit game lol
 	while game_state.ready:
 		game_state.save()
 		valid_inputs, state_change = display_event(game_state.current_event, game_state)
@@ -91,6 +90,15 @@ def play(game_state):
 def process_input(game_state, valid_inputs):
 	#try:
 	line = str(input())
+	illegal_characters = "\"\'()[]{}"
+	if any(c in illegal_characters for c in line):
+		display_invalid()
+		return process_input(game_state, valid_inputs)
+
+	if not valid_inputs:
+		#Get raw user input
+		return line
+
 	if line in {"m", "menu"}:
 		menu_options, state_change = display_menu(game_state)
 		selection = process_input(game_state, menu_options)

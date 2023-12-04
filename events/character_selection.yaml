@@ -1,0 +1,48 @@
+character_selection:
+  name: "character selection"
+  prereqs: [[]]
+  description: "Please select starting character information: "
+  options:
+    - text: "Enter Name."
+      effort_cost: 0
+      prereqs: [["options['forest_child']['enabled']"]]
+      next_events:
+        - event_name: "character_selection"
+          chance: 100
+    - text: "Choose Background."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events: 
+        - event_name: "character_selection"
+          chance: 100
+
+
+enter_name:
+  name: "enter name"
+  prereqs: [[]]
+  description: "Select name info to enter: "
+  options:
+    - text: "Enter First Name"
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "enter_first_name"
+          chance: 100
+    - text: "Select Existing Surname"
+      effort_cost: 0
+      prereqs: [[]]
+      next_events: 
+        - event_name: "select_surname"
+          chance: 100
+    - text: "Enter Original Surname"
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "enter_last_name"
+          chance: 100
+    - text: "Enter Nickname"
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "enter_nickname"
+          chance: 100
