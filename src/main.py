@@ -10,7 +10,7 @@ from characters.player import Player
 from error_handler import Error
 
 
-
+FIRST_EVENT = "character_select"
 REREQUEST = "m@g!c_v@1u3_us3r_!nput"
 
 def main():
@@ -36,18 +36,14 @@ def main():
 
 def new_game():
 	event_map = load_event_yamls()
-	current_event = event_map["inciting_incident"]
+	current_event = event_map[FIRST_EVENT]
 
 	current_location = Location({"start"}) 
 	# TODO load characters
 	characters = None
 	# TODO generate magic system
 	magic_system = None
-	# choose player character
-	#TODO
-	print("Enter Character Name:")
-	player_name = str(input())
-	player = Player(player_name)
+	player = Player()
 
 	#TODO seed
 	seed = "traditional"

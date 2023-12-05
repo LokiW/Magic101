@@ -32,9 +32,9 @@ def load_event_yamls():
 							else:
 								Error.logln("    creating event: "+event_name)
 								event_map[event_name] = Event(event=e, event_map=event_map)
-	Error.logln("")
-	Error.log(str(event_map))
-	Error.log("\n\n")
+	for name, event in event_map.items():
+		if not event.is_initialized:
+			Error.logln("References to Uninitialized Event: "+name)
 	return event_map
 
 
@@ -86,14 +86,24 @@ def verify_event_yaml(e):
 		if "text" not in option:
 			Error.logln("event yaml invalid, 'options' has no text, skipping event: "+event_name)
 		o_text = option["text"]
-		if "effort_cost" not in option or "prereqs" not in option:
-			Error.logln("event yaml invalid, 'option' "+o_text+" incorrect, skipping event: "+event_name)
+		if "event_style" in e and e["event_style"] != "default":
+			if e["event_style"] == "user_input_event" and "priority" not in option:
+				Error.logln("event yaml invalid, 'option' "+o_text+" incorrect, user input events must have priority field skipping event: "+event_name)
+				return False
+			Error.logln("No-default event "+event_name+" has correct fields")
+		elif "effort_cost" not in option:
+			Error.logln("event yaml invalid, 'option' "+o_text+" incorrect, default events must have effort_cost, skipping event: "+event_name)
 			return False
+		if "prereqs" not in option:
+			Error.logln("event yaml invalid, 'option' "+o_text+" incorrect, no prereqs, skipping event: "+event_name)
+			return False
+		"""
 		if "spell_event" not in option and "next_events" not in option:
 			Error.logln("event yaml invalid, 'option' "+o_text+" incorrect (must have spell_event or next_events), skipping event: "+event_name)
 			return False
 		if "spell_event" in option and "next_events" in option:
 			Error.logln("event yaml invalid, 'option' "+o_text+" incorrect (must not have both spell_event and next_events), skipping event: "+event_name)
 			return False
+		"""
 
 	return True

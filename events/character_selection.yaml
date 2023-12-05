@@ -1,24 +1,24 @@
-character_selection:
-  name: "character selection"
+character_select:
+  name: "character_select"
   prereqs: [[]]
   description: "Please select starting character information: "
   options:
     - text: "Enter Name."
       effort_cost: 0
-      prereqs: [["options['forest_child']['enabled']"]]
+      prereqs: [[]]
       next_events:
-        - event_name: "character_selection"
+        - event_name: "enter_name"
           chance: 100
     - text: "Choose Background."
       effort_cost: 0
       prereqs: [[]]
       next_events: 
-        - event_name: "character_selection"
+        - event_name: "character_select"
           chance: 100
 
 
 enter_name:
-  name: "enter name"
+  name: "enter_name"
   prereqs: [[]]
   description: "Select name info to enter: "
   options:
@@ -46,3 +46,45 @@ enter_name:
       next_events:
         - event_name: "enter_nickname"
           chance: 100
+    - text: "Return to Character Select"
+      effort_cost: 0
+      prereqs: [["previous_events.contains('enter_last_name')"],["previous_events.contains('enter_first_name')"]]
+      next_events:
+        - event_name: "character_select"
+          chance: 100
+
+
+
+enter_first_name:
+  name: "enter_first_name"
+  prereqs: [[]]
+  event_style: "user_input_event"
+  description: "Enter first name: "
+  options:
+    - text: ""
+      priority: 100
+      prereqs: [[]]
+      effects: ["assign('player.first_name', 'last_user_input')"]
+      next_events:
+        - event_name: "confirm_first_name"
+          chance: 100
+
+
+confirm_first_name:
+  name: "confirm_first_name"
+  prereqs: [["previous_events.contains('enter_first_name')"]]
+  description: "Use <<player.first_name>> as name?"
+  options:
+    - text: "Confirm?"
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "enter_name"
+          chance: 100
+    - text: "Re-Enter."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "enter_first_name"
+          chance: 100
+ 

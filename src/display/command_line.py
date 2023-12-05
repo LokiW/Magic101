@@ -5,15 +5,16 @@ from error_handler import Error
 
 def display_event(event, game_state):
 	os.system('clear')
-	if event.type == "user_input_event":
+	if event.style == "user_input_event":
 		return display_user_input_event(event, game_state)
-	elif event.type == "spell_event":
+	elif event.style == "spell_event":
 		return display_spell_event(event, game_state)
 	else:
 		return display_default_event(event, game_state)
 
 def display_default_event(event, game_state):
-	print(event.desc)
+	display_text = insert_data_into_text(event.desc, game_state)
+	print(display_text)
 	game_state.previous_events.add(event.name)
 
 	op_num = 1
@@ -61,26 +62,28 @@ def display_menu(game_state):
 
 
 def display_user_input_event(event, game_state):
-	print(event.desc)
+	display_text = insert_data_into_text(event.desc, game_state)
+	print(display_text)
 	game_state.previous_events.add(event.name)
 
 	def output(user_input):
 		game_state.last_user_input = user_input
 		op_choice = (-1, None)
 		for option in event.options:
+			Error.logln(event.name)
+			Error.logln(option.text)
 			if option and option.prereqs.meets_prereqs(game_state):
 				if option.priority > op_choice[0]:
 					op_choice = (option.priority, option)
-
 		option = op_choice[1]
 		if not option:
 			Error.logln("No valid next event after user input event: "+event.name)
 			return
-
 		if option.has_effects:
 			option.effects.execute_effects(game_state)
 		game_state.current_event = option.get_next_event(game_state)
 
+	return {}, output
 
 
 def display_spell_event(event, game_state):
@@ -91,3 +94,22 @@ def display_spell_event(event, game_state):
 def display_inventory(game_state):
 	# TODO
 	return
+
+
+def insert_data_into_text(text, game_state):
+	# replace instances of <<val>> with value of game_state.val in given text
+	to_replace = re.findall(r'<<.*>>', text)
+	output = text
+	for replacement in to_replace:
+		replace_code = replacement[2:-2]
+		replace_val = ""
+		Error.logln(replacement)
+		Error.logln(replace_code)
+		Error.logln(game_state.player.first_name)
+		try:
+			replace_val = game_state.get_value(replace_code)
+			Error.logln(str(replace_val))
+		except Exception as e:
+			Error.logln("could not replace variable in given text "+text+" due to "+str(e))
+		output = output.replace(replacement, replace_val)
+	return output

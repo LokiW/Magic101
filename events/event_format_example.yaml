@@ -1,7 +1,7 @@
 event:
   name: ""
   prereqs: [[]]
-  event_type: ""
+  event_style: ""
   description: ""
   options:
     - text: ""

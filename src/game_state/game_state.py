@@ -26,6 +26,32 @@ class GameState:
 		self.last_user_input = last_input
 
 
+	"""
+	method for events to assign values to gamestate when both values are in gamestate object
+	"""
+	def assign(self, attr1, attr2):
+		to_set = self
+		for val in attr1.split(".")[:-1]:
+			to_set = getattr(to_set, val)
+			Error.logln(str(to_set))
+
+		to_get = self
+		for val in attr2.split("."):
+			to_get = getattr(to_get, val)
+			Error.logln(str(to_get))
+
+		if to_get == self:
+			raise Exception("Invalid assignment, cannot assign with root game_state")
+
+		setattr(to_set, attr1.split(".")[-1], to_get)
+
+	def get_value(self, attr1):
+		to_get = self
+		for val in attr1.split("."):
+			to_get = getattr(to_get, val)
+		return to_get
+
+
 	def __repr__(self):
 		reprd = {}
 		reprd['player'] = self.player.__repr__()

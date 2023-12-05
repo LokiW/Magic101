@@ -14,10 +14,10 @@ class Event:
 	def update(self, event, event_map):
 		self.name = event["name"]
 		self.prereqs = Prereqs(event["prereqs"])
-		if "type" in event:
-			self.type = event["event_type"]
+		if "event_style" in event:
+			self.style = event["event_style"]
 		else:
-			self.type = "default"
+			self.style = "default"
 
 		self.desc = event["description"]
 
@@ -33,8 +33,9 @@ class Option:
 
 		if "effort_cost" in option:
 			self.effort = option["effort_cost"]
-		if "piority" in option: # event types for not user selected next events
+		if "priority" in option: # event styles for not user selected next events
 			self.priority = option["priority"]
+			Error.logln("    set priority field for option")
 
 		self.has_effects = "effects" in option and option["effects"]
 		if self.has_effects:
