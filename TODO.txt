@@ -1,0 +1,27 @@
+Low Hanging Fruit:
+Dont allow game to run with dangling events (currently just logs error)
+Finish name entry events
+Fix failed prereqs for name entry event
+Test probability next events
+input seed
+display inventory
+interact with inventory
+think more on save file name?
+
+
+Mid Fruit:
+NPCs
+
+
+Tall Fruit:
+magic system
+win conditions
+load seed from prev game
+load data / unlocks from prev game
+spell events
+GRAPHICS
+
+
+Dull Fruit:
+More events
+More player custmization 
