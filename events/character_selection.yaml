@@ -87,4 +87,104 @@ confirm_first_name:
       next_events:
         - event_name: "enter_first_name"
           chance: 100
+
  
+enter_last_name:
+  name: "enter_last_name"
+  prereqs: [[]]
+  event_style: "user_input_event"
+  description: "Enter surname: "
+  options:
+    - text: ""
+      priority: 100
+      prereqs: [[]]
+      effects: ["assign('player.last_name', 'last_user_input')"]
+      next_events:
+        - event_name: "confirm_last_name"
+          chance: 100
+
+
+confirm_last_name:
+  name: "confirm_last_name"
+  prereqs: [["previous_events.contains('enter_last_name')"]]
+  description: "Use <<player.last_name>> as name?"
+  options:
+    - text: "Confirm?"
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "enter_name"
+          chance: 100
+    - text: "Re-Enter."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "enter_last_name"
+          chance: 100
+ 
+enter_nickname:
+  name: "enter_nickname"
+  prereqs: [[]]
+  event_style: "user_input_event"
+  description: "Enter nickname: "
+  options:
+    - text: ""
+      priority: 100
+      prereqs: [[]]
+      effects: ["assign('player.nickname', 'last_user_input')"]
+      next_events:
+        - event_name: "confirm_nickname"
+          chance: 100
+
+
+confirm_nickname:
+  name: "confirm_nickname"
+  prereqs: [["previous_events.contains('enter_nickname')"]]
+  description: "Use <<player.nickname>> as name?"
+  options:
+    - text: "Confirm?"
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "enter_name"
+          chance: 100
+    - text: "Re-Enter."
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "enter_nickname"
+          chance: 100
+
+ 
+ select_surname:
+  name: "select_surname"
+  prereqs: [[]]
+  description: "Select surname: "
+  options:
+    - text: "White"
+      effort_cost: 0
+      prereqs: [[]]
+      effects: ["player.last_name = 'White'"]
+      next_events:
+        - event_name: "confirm_last_name"
+          chance: 100
+    - text: "Black"
+      effort_cost: 0
+      prereqs: [[]]
+      effects: ["player.last_name = 'Black'"]
+      next_events:
+        - event_name: "confirm_last_name"
+          chance: 100
+    - text: "Green"
+      effort_cost: 0
+      prereqs: [[]]
+      effects: ["player.last_name = 'Weasley'"]
+      next_events:
+        - event_name: "confirm_last_name"
+          chance: 100
+    - text: "Cancel surname selection"
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: "enter_name"
+          chance: 100
