@@ -33,12 +33,10 @@ class GameState:
 		to_set = self
 		for val in attr1.split(".")[:-1]:
 			to_set = getattr(to_set, val)
-			Error.logln(str(to_set))
 
 		to_get = self
 		for val in attr2.split("."):
 			to_get = getattr(to_get, val)
-			Error.logln(str(to_get))
 
 		if to_get == self:
 			raise Exception("Invalid assignment, cannot assign with root game_state")
@@ -64,6 +62,10 @@ class GameState:
 		return json.dumps(reprd)
 
 	def save(self):
+		if not self.player.first_name or not self.player.last_name:
+			Error.logln("Player uninitialized, skipping save")
+			return
+
 		if not os.path.exists(file_path):
 			os.mkdir(file_path)
 	
@@ -80,7 +82,7 @@ class GameState:
 		inventory = []
 		for item in json.loads(player_dict['inventory']):
 			inventory.append(Item.load(item))
-		player = Player(player_dict["name"], inventory)
+		player = Player(player_dict["first_name"], player_dict["last_name"], player_dict["nickname"], inventory)
 
 		current_event = event_map[load_info['current_event_name']]
 

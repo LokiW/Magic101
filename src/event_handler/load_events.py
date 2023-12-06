@@ -90,7 +90,6 @@ def verify_event_yaml(e):
 			if e["event_style"] == "user_input_event" and "priority" not in option:
 				Error.logln("event yaml invalid, 'option' "+o_text+" incorrect, user input events must have priority field skipping event: "+event_name)
 				return False
-			Error.logln("No-default event "+event_name+" has correct fields")
 		elif "effort_cost" not in option:
 			Error.logln("event yaml invalid, 'option' "+o_text+" incorrect, default events must have effort_cost, skipping event: "+event_name)
 			return False

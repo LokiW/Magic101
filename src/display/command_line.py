@@ -30,9 +30,7 @@ def display_default_event(event, game_state):
 		if option.has_effects:
 			option.effects.execute_effects(game_state)
 		game_state.current_event = option.get_next_event(game_state)
-	Error.logln(str(op_choice))
 
-	Error.logln(str(output))
 	# valid input options and func to call with input
 	return op_choice.keys(), output
 
@@ -70,8 +68,6 @@ def display_user_input_event(event, game_state):
 		game_state.last_user_input = user_input
 		op_choice = (-1, None)
 		for option in event.options:
-			Error.logln(event.name)
-			Error.logln(option.text)
 			if option and option.prereqs.meets_prereqs(game_state):
 				if option.priority > op_choice[0]:
 					op_choice = (option.priority, option)
@@ -103,12 +99,8 @@ def insert_data_into_text(text, game_state):
 	for replacement in to_replace:
 		replace_code = replacement[2:-2]
 		replace_val = ""
-		Error.logln(replacement)
-		Error.logln(replace_code)
-		Error.logln(game_state.player.first_name)
 		try:
 			replace_val = game_state.get_value(replace_code)
-			Error.logln(str(replace_val))
 		except Exception as e:
 			Error.logln("could not replace variable in given text "+text+" due to "+str(e))
 		output = output.replace(replacement, replace_val)

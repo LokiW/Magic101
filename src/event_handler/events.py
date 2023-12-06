@@ -35,7 +35,6 @@ class Option:
 			self.effort = option["effort_cost"]
 		if "priority" in option: # event styles for not user selected next events
 			self.priority = option["priority"]
-			Error.logln("    set priority field for option")
 
 		self.has_effects = "effects" in option and option["effects"]
 		if self.has_effects:
@@ -68,6 +67,5 @@ class Option:
 				Error.logln("Error: event %s is uninitialized" % (event[1].name))
 				continue
 			current_chance += event[0]
-			Error.logln("chose event because: "+str(percent)+"<"+str(current_chance))
 			if percent < current_chance: #TODO check for off by one
 				return event[1]

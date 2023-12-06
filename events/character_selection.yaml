@@ -15,6 +15,12 @@ character_select:
       next_events: 
         - event_name: "character_select"
           chance: 100
+    - text: "Start Game"
+      effort_cost: 0
+      prereqs: [["player.last_name"],["player.first_name"]]
+      next_events: 
+        - event_name: "inciting_incident"
+          chance: 100
 
 
 enter_name:
@@ -48,7 +54,7 @@ enter_name:
           chance: 100
     - text: "Return to Character Select"
       effort_cost: 0
-      prereqs: [["previous_events.contains('enter_last_name')"],["previous_events.contains('enter_first_name')"]]
+      prereqs: [["player.last_name"],["player.first_name"]]
       next_events:
         - event_name: "character_select"
           chance: 100
@@ -72,7 +78,7 @@ enter_first_name:
 
 confirm_first_name:
   name: "confirm_first_name"
-  prereqs: [["previous_events.contains('enter_first_name')"]]
+  prereqs: [["previous_events.__contains__('enter_first_name')"]]
   description: "Use <<player.first_name>> as name?"
   options:
     - text: "Confirm?"
@@ -121,7 +127,8 @@ confirm_last_name:
       next_events:
         - event_name: "enter_last_name"
           chance: 100
- 
+
+
 enter_nickname:
   name: "enter_nickname"
   prereqs: [[]]
@@ -155,8 +162,8 @@ confirm_nickname:
         - event_name: "enter_nickname"
           chance: 100
 
- 
- select_surname:
+
+select_surname:
   name: "select_surname"
   prereqs: [[]]
   description: "Select surname: "

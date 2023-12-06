@@ -13,9 +13,9 @@ class Prereqs:
 			for prereq in prereq_list:
 				func = "game_state."+prereq
 				try:
-					match = exec(func)
-				except:
-					Error.logln("Invalid prereq: "+prereq)
+					match = eval(func)
+				except Exception as e:
+					Error.logln("Invalid prereq: "+prereq+" failed with "+str(e))
 
 				if match:
 					break
