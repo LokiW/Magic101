@@ -23,7 +23,7 @@ recieve_school_acceptance:
           chance: 100
     - text: "You're going to learn magic? Is this a prank? Sheepishly find a wishing well."
       effort_cost: 0
-      prereqs: [[]]
+      prereqs: [["player.traits['raised_magically'] == False"]]
       next_events: 
         - event_name: "wishing_well_unsure"
           chance: 100

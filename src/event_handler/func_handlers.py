@@ -31,7 +31,6 @@ class Effects:
 
 	def execute_effects(self, game_state):
 		for effect in self.effects:
-			#TODO
 			func = "game_state."+effect
 			try:
 				exec(func)

@@ -26,7 +26,7 @@ class Item():
 		return attribute in self.attributes
 
 	def load(repr_dict):
-		return Item(repr_dict['display_name'], repr_dict['quantity'], json.loads(repr_dict['attributes']))
+		return Item(repr_dict['display_name'], repr_dict['quantity'], repr_dict['attributes'])
 
 	def __repr__(self):
 		reprd = {}
@@ -45,9 +45,12 @@ class Inventory():
 			display_name = name
 		self.items[name] = Item(display_name, quantity, attributes)
 
+	def has_item(self, name):
+		return name in self.items
+
 	def set_quantity(self, name, quantity=1):
 		if name not in self.items:
-			self.add_item(name, quantity)
+			self.add_item(name, quantity=quantity)
 		else:
 			self.items[name].quantity = quantity
 
@@ -85,9 +88,13 @@ class Inventory():
 			return False
 		return self.items[name].has_attribute(attribute)
 
+	def load(self, reprd):
+		for name, item in reprd.items():
+			self.items[name] = Item.load(json.loads(item))
+
 	def __repr__(self):
-		reprd = []
-		for item in self.items:
-			reprd.add(item.__repr__())
+		reprd = {}
+		for name, item in self.items.items():
+			reprd[name] = item.__repr__()
 		return json.dumps(reprd)
 	

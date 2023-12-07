@@ -78,11 +78,8 @@ class GameState:
 
 		load_info = json.loads(yaml.safe_load(save_file))
 
-		player_dict = json.loads(load_info['player'])
-		inventory = []
-		for item in json.loads(player_dict['inventory']):
-			inventory.append(Item.load(item))
-		player = Player(player_dict["first_name"], player_dict["last_name"], player_dict["nickname"], inventory)
+		player = Player()
+		player.load(json.loads(load_info['player']))
 
 		current_event = event_map[load_info['current_event_name']]
 

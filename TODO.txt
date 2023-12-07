@@ -1,7 +1,5 @@
 Low Hanging Fruit:
 Dont allow game to run with dangling events (currently just logs error)
-Finish name entry events
-Fix failed prereqs for name entry event
 Test probability next events
 input seed
 display inventory
