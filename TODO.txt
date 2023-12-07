@@ -1,14 +1,12 @@
 Low Hanging Fruit:
 Dont allow game to run with dangling events (currently just logs error)
-Test probability next events
 input seed
-display inventory
-interact with inventory
 think more on save file name?
 
 
 Mid Fruit:
 NPCs
+go to current location events
 
 
 Tall Fruit:
@@ -23,3 +21,4 @@ GRAPHICS
 Dull Fruit:
 More events
 More player custmization 
+Test probability/weight works for next events

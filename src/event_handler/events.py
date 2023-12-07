@@ -13,7 +13,6 @@ class Event:
 
 	def update(self, event, event_map):
 		self.name = event["name"]
-		self.prereqs = Prereqs(event["prereqs"])
 		if "event_style" in event:
 			self.style = event["event_style"]
 		else:
@@ -39,33 +38,32 @@ class Option:
 		self.has_effects = "effects" in option and option["effects"]
 		if self.has_effects:
 			self.effects = Effects(option["effects"])
-		self.prereqs = Prereqs(option["prereqs"])
-		"""
-		self.is_spell_option = "spell_event" in option
-		if self.is_spell_option:
-			self.max_casting = option["max_casting"]
-			self.spell_to_event = {}
-			for e in option["spell_event"]:
-				if e["event_name"] not in event_map:
-						event_map[e["event_name"]] = Event(name=e["event_name"])
-				for spell in e["spell_triggers"]:
-					self.spell_to_event[spell] = event_map[e["event_name"]]
-		else: # next events weighted
-		"""
+		self.prereqs = Prereqs([[]]) if "prereqs" not in option else Prereqs(option["prereqs"])
+
 		for e in option["next_events"]:
 			self.next_events = []
 			if e["event_name"] not in event_map:
 				event_map[e["event_name"]] = Event(name=e["event_name"])
-			self.next_events.append([e["chance"], event_map[e["event_name"]]])
+			ne_prereqs = Prereqs([[]]) if "prereqs" not in e else Prereqs(e["prereqs"])
+			ne_effects = Effects([]) if "effects" not in e else Effects(e["effects"])
+			self.next_events.append([e["weight"], ne_prereqs, ne_effects, event_map[e["event_name"]]])
 
 	def get_next_event(self, game_state):
-		percent = game_state.rng.randrange(0,99)
-		current_chance = 0
-		for event in self.next_events:
-			if not event[1].is_initialized:
+		# chance = weight / sum( all weights)
+		total_weight = 0
+		weight_tuples = []
+		for weight, prereqs, effects, event in self.next_events:
+			if not event.is_initialized:
 				#TODO error handling
-				Error.logln("Error: event %s is uninitialized" % (event[1].name))
+				Error.logln("Error: event %s is uninitialized" % (event.name))
 				continue
-			current_chance += event[0]
-			if percent < current_chance: #TODO check for off by one
-				return event[1]
+			if prereqs.meets_prereqs(game_state):
+				total_weight += weight
+				weight_tuples.append((weight, event, effects))
+
+		percent = game_state.rng.randrange(0,total_weight)
+		current_weight = 0
+		for weight, event, effects in weight_tuples:
+			current_weight += weight
+			if percent < current_weight: #TODO check for off by one
+				return event, effects

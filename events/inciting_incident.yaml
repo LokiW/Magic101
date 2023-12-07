@@ -1,6 +1,5 @@
 inciting_incident:
   name: "inciting_incident"
-  prereqs: [[]]
   description: "You are walking by a large old tree when something catches your attention. Upon closer inspection, you find a thick scroll of brown paper wrapped in twine in a hollow in the trunk of the tree."
   options:
     - text: "It is probably meant for someone else. Leave the scroll and keep walking."
@@ -8,12 +7,12 @@ inciting_incident:
       prereqs: [["options['forest_child']['enabled']"]]
       next_events:
         - event_name: "followed_by_scroll_1"
-          chance: 100
+          weight: 100
     - text: "Take the scroll."
       effort_cost: 0
       prereqs: [[]]
       next_events: 
         - event_name: "recieve_school_acceptance"
-          chance: 100
+          weight: 100
 
 

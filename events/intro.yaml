@@ -1,6 +1,5 @@
 recieve_school_acceptance:
   name: "recieve_school_acceptance"
-  prereqs: [[]]
   description: >
     On the outside of the scroll, your name is written in big loopy ink. When you open it, the scroll unfurls down to your waist. There is a thud as something falls out of the scroll to the ground. It is a heavy silver coin with a hole in the center and strange runes carved roughly around the edge. The scroll reads, in big loopy writting hand inked onto the thick paper -\n
     
@@ -20,25 +19,24 @@ recieve_school_acceptance:
       prereqs: [["options['forest_child']['enabled']"]]
       next_events:
         - event_name: "transported_to_school_unwilling"
-          chance: 100
+          weight: 100
     - text: "You're going to learn magic? Is this a prank? Sheepishly find a wishing well."
       effort_cost: 0
       prereqs: [["player.traits['raised_magically'] == False"]]
       next_events: 
         - event_name: "wishing_well_unsure"
-          chance: 100
+          weight: 100
     - text: "You're going to learn magic! Collect some money and go find a wishing well."
       effort_cost: 0
       prereqs: [[]]
       effects: ["player.inventory.add_quantity(name='money',quantity=50)"]
       next_events: 
         - event_name: "wishing_well_confident"
-          chance: 100
+          weight: 100
 
 
 wishing_well_confident:
   name: "wishing_well_confident"
-  prereqs: [[]]
   description: >
     You gather up what you hope will be enough money for your school supplies and make your way towards a fountain. It is not labeled as a wishing well but there are a few coins scattered around the bottom of the pool. You take the heavy silver coin and toss it into the well wishing to arrive at the magical marketplace. The water in the fountain suddenly stops in place. It isn't frozen like ice, but the water is suspended in the air, unmoving. The drops of water that splashed out from where the fountain hit the pool are suspended in place. Looking around everything is frozen. The birds still in the sky above you, the leaves of a nearby tree bent mid breeze but unmoving. Then the pool of the fountain begins to spin and the water emits a strange glowing light. You step over the edge of the fountain into the water which parts out of the way of your feet. The glowing water then rises slowly around you, forming a whirling column of glowing water obstructing the world from view. 
 
@@ -51,12 +49,11 @@ wishing_well_confident:
       effects: ["current_location.set_location('magicmarket')"]
       next_events:
         - event_name: "magical_market_entrence"
-          chance: 100
+          weight: 100
 
 
 wishing_well_unsure:
   name: "wishing_well_unsure"
-  prereqs: [[]]
   description: "You think you recall the location of a fountain, and you gather the coin and scroll and make your way towards it. It is not labeled as a wishing well but there are a few coins scattered around the bottom of the pool. You take the heavy silver coin, and feeling a bit foolish, toss it into the water. Supposing you are supposed to make a wish, you wish that magic was real, then feeling foolish you turn to scurry away from the fountain before you can be disapointed. As you turn, however, you notice something odd. The gentle summer breeze had suddenly died, but the nearby tree is still bent at an odd angle as if being blown. Except all the leaves are perfectly and unnaturally still. There is a bird that had just jumped from it's branches band although it is completely free of the branch it is stopped in middair. Spinning around you, everything is still, when you look back at the fountain, the water is stopped in place. It isn't frozen like ice, but stuck in the air, unmoving. The drops of water that splashed out from where the fountain hit the pool are suspended in place.
 
 As you watch, the pool of the fountain begins to spin and the water emits a strange glowing light. The glow increases as the water changes to a shade of crystal blue. 
@@ -70,20 +67,7 @@ As you watch, the pool of the fountain begins to spin and the water emits a stra
       effects: ["current_location.set_location('magicmarket')"]
       next_events:
         - event_name: "magical_market_entrence"
-          chance: 100
+          weight: 100
 
 
-magical_market_entrence:
-  name: "magical_market_entrence"
-  prereqs: [[]]
-  description: >
-    All around you is a mish-mash of cobbled stone and ancient forest, bustling with colorfully dressed people almost all in various kinds of robes and most wearing tall pointed hats. Buildings of all sorts weave in and around giant trees, some trees growing completely around the roofs, their roots curling around the buildings befoer diving into the earth. Little shops with peaked roofs, shingled in old wood. Stone towers spiraling into the canopy of leaves above you. Steeples jutting at impossible angles, some dangling over the rough stone pathway where people walk to and from shops. Little paths jut out between buildings and you can see even more little shops deeper into the forest.
-
-  options:
-    - text: ""
-      effort_cost: 0
-      prereqs: [[]]
-      next_events:
-        - event_name: ""
-          chance: 100
 

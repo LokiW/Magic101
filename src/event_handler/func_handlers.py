@@ -16,7 +16,7 @@ class Prereqs:
 					match = eval(func)
 				except Exception as e:
 					Error.logln("Invalid prereq: "+prereq+" failed with "+str(e))
-
+					match = False
 				if match:
 					break
 			if not match:

@@ -3,6 +3,7 @@ import os
 from event_handler.load_events import load_event_yamls
 from display.command_line import display_event
 from display.command_line import display_menu
+from display.command_line import display_inventory
 from game_state.game_state import GameState
 from game_state.load_default_yamls import load_options
 from game_state.location import Location
@@ -98,6 +99,12 @@ def process_input(game_state, valid_inputs):
 	if line in {"m", "menu"}:
 		menu_options, state_change = display_menu(game_state)
 		selection = process_input(game_state, menu_options)
+		state_change(selection)
+		return REREQUEST
+
+	if line in {"i", "inventory"}:
+		inventory_options, state_change = display_inventory(game_state)
+		selection = process_input(game_state, inventory_options)
 		state_change(selection)
 		return REREQUEST
 

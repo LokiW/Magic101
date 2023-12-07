@@ -1,6 +1,5 @@
 event:
   name: ""
-  prereqs: [[]]
   event_style: "default"
   description: ""
   options:
@@ -10,13 +9,14 @@ event:
       prereqs: [[]]
       next_events:
         - event_name: ""
-          chance: 50
+          prereqs: [[]]
+          weight: 50
         - event_name: ""
-          chance: 50
+          weight: 50
     - text: ""
       effort_cost: 0
       prereqs: [[]]
       next_events: 
         - event_name: ""
-          chance: 100
+          weight: 100
 

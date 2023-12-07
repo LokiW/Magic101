@@ -1,301 +1,258 @@
 character_select:
   name: "character_select"
-  prereqs: [[]]
   description: "Please select starting character information: "
   options:
     - text: "Enter Name."
       effort_cost: 0
-      prereqs: [[]]
       next_events:
         - event_name: "enter_name"
-          chance: 100
+          weight: 100
     - text: "Choose Background."
       effort_cost: 0
-      prereqs: [[]]
       next_events: 
         - event_name: "choose_background"
-          chance: 100
+          weight: 100
     - text: "Start Game"
       effort_cost: 0
       prereqs: [["player.last_name"],["player.first_name"]]
       next_events: 
         - event_name: "inciting_incident"
-          chance: 100
+          weight: 100
 
 
 enter_name:
   name: "enter_name"
-  prereqs: [[]]
   description: "Select name info to enter: "
   options:
     - text: "Enter First Name"
       effort_cost: 0
-      prereqs: [[]]
       next_events:
         - event_name: "enter_first_name"
-          chance: 100
+          weight: 100
     - text: "Select Existing Surname"
       effort_cost: 0
-      prereqs: [[]]
       next_events: 
         - event_name: "select_surname"
-          chance: 100
+          weight: 100
     - text: "Enter Original Surname"
       effort_cost: 0
-      prereqs: [[]]
       next_events:
         - event_name: "enter_last_name"
-          chance: 100
+          weight: 100
     - text: "Enter Nickname"
       effort_cost: 0
-      prereqs: [[]]
       next_events:
         - event_name: "enter_nickname"
-          chance: 100
+          weight: 100
     - text: "Return to Character Select"
       effort_cost: 0
       prereqs: [["player.last_name"],["player.first_name"]]
       next_events:
         - event_name: "character_select"
-          chance: 100
+          weight: 100
 
 
 
 enter_first_name:
   name: "enter_first_name"
-  prereqs: [[]]
   event_style: "user_input_event"
   description: "Enter first name: "
   options:
     - text: ""
       priority: 100
-      prereqs: [[]]
       effects: ["assign('player.first_name', 'last_user_input')"]
       next_events:
         - event_name: "confirm_first_name"
-          chance: 100
+          weight: 100
 
 
 confirm_first_name:
   name: "confirm_first_name"
-  prereqs: [["previous_events.__contains__('enter_first_name')"]]
   description: "Use <<player.first_name>> as name?"
   options:
     - text: "Confirm?"
       effort_cost: 0
-      prereqs: [[]]
       next_events:
         - event_name: "enter_name"
-          chance: 100
+          weight: 100
     - text: "Re-Enter."
       effort_cost: 0
-      prereqs: [[]]
       next_events:
         - event_name: "enter_first_name"
-          chance: 100
+          weight: 100
 
  
 enter_last_name:
   name: "enter_last_name"
-  prereqs: [[]]
   event_style: "user_input_event"
   description: "Enter surname: "
   options:
     - text: ""
       priority: 100
-      prereqs: [[]]
       effects: ["assign('player.last_name', 'last_user_input')"]
       next_events:
         - event_name: "confirm_last_name"
-          chance: 100
+          weight: 100
 
 
 confirm_last_name:
   name: "confirm_last_name"
-  prereqs: [["previous_events.contains('enter_last_name')"]]
   description: "Use <<player.last_name>> as name?"
   options:
     - text: "Confirm?"
       effort_cost: 0
-      prereqs: [[]]
       next_events:
         - event_name: "enter_name"
-          chance: 100
+          weight: 100
     - text: "Re-Enter."
       effort_cost: 0
-      prereqs: [[]]
       next_events:
         - event_name: "enter_last_name"
-          chance: 100
+          weight: 100
 
 
 enter_nickname:
   name: "enter_nickname"
-  prereqs: [[]]
   event_style: "user_input_event"
   description: "Enter nickname: "
   options:
     - text: ""
       priority: 100
-      prereqs: [[]]
       effects: ["assign('player.nickname', 'last_user_input')"]
       next_events:
         - event_name: "confirm_nickname"
-          chance: 100
+          weight: 100
 
 
 confirm_nickname:
   name: "confirm_nickname"
-  prereqs: [["previous_events.contains('enter_nickname')"]]
   description: "Use <<player.nickname>> as name?"
   options:
     - text: "Confirm?"
       effort_cost: 0
-      prereqs: [[]]
       next_events:
         - event_name: "enter_name"
-          chance: 100
+          weight: 100
     - text: "Re-Enter."
       effort_cost: 0
-      prereqs: [[]]
       next_events:
         - event_name: "enter_nickname"
-          chance: 100
+          weight: 100
 
 
 select_surname:
   name: "select_surname"
-  prereqs: [[]]
   description: "Select surname: "
   options:
     - text: "White"
       effort_cost: 0
-      prereqs: [[]]
       effects: ["player.last_name = 'White'"]
       next_events:
         - event_name: "confirm_last_name"
-          chance: 100
+          weight: 100
     - text: "Black"
       effort_cost: 0
-      prereqs: [[]]
       effects: ["player.last_name = 'Black'"]
       next_events:
         - event_name: "confirm_last_name"
-          chance: 100
+          weight: 100
     - text: "Green"
       effort_cost: 0
-      prereqs: [[]]
       effects: ["player.last_name = 'Weasley'"]
       next_events:
         - event_name: "confirm_last_name"
-          chance: 100
+          weight: 100
     - text: "Cancel surname selection"
       effort_cost: 0
-      prereqs: [[]]
       next_events:
         - event_name: "enter_name"
-          chance: 100
+          weight: 100
 
 
 choose_background:
   name: "choose_background"
-  prereqs: [[]]
   description: "Select background information to select: "
   options:
     - text: "Select starting wealth"
       effort_cost: 0
-      prereqs: [[]]
       next_events:
         - event_name: "starting_wealth"
-          chance: 100
+          weight: 100
     - text: "Select magical heritage"
       effort_cost: 0
-      prereqs: [[]]
       next_events: 
         - event_name: "select_magical_heritage"
-          chance: 100
+          weight: 100
     - text: "Return to Character Select"
       effort_cost: 0
-      prereqs: [[]]
       next_events:
         - event_name: "character_select"
-          chance: 100
+          weight: 100
 
 
 starting_wealth:
   name: "starting_wealth"
-  prereqs: [[]]
   description: "Select your character's starting wealth/family wealth"
   options:
     - text: "Poor"
       effort_cost: 0
       effects: ["player.traits['family_wealth'] = 'poor'", "player.inventory.set_quantity('money', 20)"]
-      prereqs: [[]]
       next_events:
         - event_name: "choose_background"
-          chance: 100
+          weight: 100
     - text: "Middle Class"
       effort_cost: 0
       effects: ["player.traits['family_wealth'] = 'mid'", "player.inventory.set_quantity('money', 100)"]
-      prereqs: [[]]
       next_events: 
         - event_name: "choose_background"
-          chance: 100
+          weight: 100
     - text: "Wealthy"
       effort_cost: 0
       effects: ["player.traits['family_wealth'] = 'wealthy'", "player.inventory.set_quantity('money', 500)"]
-      prereqs: [[]]
       next_events:
         - event_name: "choose_background"
-          chance: 100
+          weight: 100
 
 
 select_magical_heritage:
   name: "select_magical_heritage"
-  prereqs: [[]]
   description: "Select how magical you're character's family is: "
   options:
     - text: "I think I have a second cousin who isn't magical?"
       effort_cost: 0
       effects: ["player.traits['raised_magically'] = True", "player.traits['magical_heritage_p1'] = 'ancient'", "player.traits['magical_heritage_p2']  = 'ancient'"]
-      prereqs: [[]]
       next_events:
         - event_name: "choose_background"
-          chance: 100
+          weight: 100
     - text: "My parents are both magical but some of my grandparents aren't"
       effort_cost: 0
       effects: ["player.traits['raised_magically'] = True", "player.traits['magical_heritage_p1'] = 'magic'", "player.traits['magical_heritage_p2'] = 'recent'"]
-      prereqs: [[]]
       next_events: 
         - event_name: "choose_background"
-          chance: 100
+          weight: 100
     - text: "One parent is magic, but the other isn't"
       effort_cost: 0
       effects: ["player.traits['raised_magically'] = True", "player.traits['magical_heritage_p1'] = 'magic'", "player.traits['magical_heritage_p2'] = 'not_magic'"]
-      prereqs: [[]]
       next_events:
         - event_name: "choose_background"
-          chance: 100
+          weight: 100
     - text: "I've never heard of magic. The parent who raised me isn't magical but I dont know about my other parent"
       effort_cost: 0
       effects: ["player.traits['raised_magically'] = False", "player.traits['magical_heritage_p1'] = 'not_magic'", "player.traits['magical_heritage_p2'] = 'unknonwn'"]
-      prereqs: [[]]
       next_events:
         - event_name: "choose_background"
-          chance: 100
+          weight: 100
     - text: "I've never heard of magic. Neither of my parents are magical"
       effort_cost: 0
       effects: ["player.traits['raised_magically'] = False", "player.traits['magical_heritage_p1'] = 'not_magic'", "player.traits['magical_heritage_p2'] = 'not_magic'"]
-      prereqs: [[]]
       next_events:
         - event_name: "choose_background"
-          chance: 100
+          weight: 100
     - text: "I've never heard of magic. My parents aren't magic but I was adopted so I don't know"
       effort_cost: 0
       effects: ["player.traits['raised_magically'] = False", "player.traits['magical_heritage_p1'] = 'unknown'", "player.traits['magical_heritage_p2'] = 'unkown'"]
-      prereqs: [[]]
       next_events:
         - event_name: "choose_background"
-          chance: 100
+          weight: 100
 
 

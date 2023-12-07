@@ -42,7 +42,6 @@ def verify_event_yaml(e):
 	"""
 	event:
   name: ""
-  prereqs: [[]]
   description: ""
   options:
     - text: ""
@@ -51,15 +50,16 @@ def verify_event_yaml(e):
       prereqs: [[]]
       next_events:
         - event_name: ""
-          chance: 50
+          prereqs: [[]]
+          weight: 50
         - event_name: ""
-          chance: 50
+          weight: 50
     - text: ""
       effort_cost: 0
       prereqs: [[]]
       next_events: 
         - event_name: ""
-          chance: 100
+          weight: 100
     - text: ""
       effort_cost: 0
       prereqs: [[]]
@@ -72,9 +72,6 @@ def verify_event_yaml(e):
 		Error.logln("event yaml invalid, no 'name', skipping event: "+str(e))
 		return False
 	event_name = e["name"]
-	if "prereqs" not in e:
-		Error.logln("event yaml invalid, no 'prereqs', skipping event: "+event_name)
-		return False
 	if "description" not in e:
 		Error.logln("event yaml invalid, no 'description', skipping event: "+event_name)
 		return False
@@ -85,6 +82,7 @@ def verify_event_yaml(e):
 	for option in e["options"]:
 		if "text" not in option:
 			Error.logln("event yaml invalid, 'options' has no text, skipping event: "+event_name)
+			return False
 		o_text = option["text"]
 		if "event_style" in e and e["event_style"] != "default":
 			if e["event_style"] == "user_input_event" and "priority" not in option:
@@ -93,16 +91,13 @@ def verify_event_yaml(e):
 		elif "effort_cost" not in option:
 			Error.logln("event yaml invalid, 'option' "+o_text+" incorrect, default events must have effort_cost, skipping event: "+event_name)
 			return False
-		if "prereqs" not in option:
-			Error.logln("event yaml invalid, 'option' "+o_text+" incorrect, no prereqs, skipping event: "+event_name)
+
+
+		if "next_events" not in option:
+			Error.logln("event yaml invalid, 'option' "+o_text+" must have next_events, skipping event: "+event_name)
 			return False
-		"""
-		if "spell_event" not in option and "next_events" not in option:
-			Error.logln("event yaml invalid, 'option' "+o_text+" incorrect (must have spell_event or next_events), skipping event: "+event_name)
-			return False
-		if "spell_event" in option and "next_events" in option:
-			Error.logln("event yaml invalid, 'option' "+o_text+" incorrect (must not have both spell_event and next_events), skipping event: "+event_name)
-			return False
-		"""
+		for next_event in option["next_events"]:
+			if "event_name" not in next_event or "weight" not in next_event:
+				Error.logln("event yaml invalid, 'option' "+o_text+" incorrect next_events, skipping event: "+event_name)
 
 	return True

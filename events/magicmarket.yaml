@@ -1,6 +1,59 @@
+magical_market_entrence:
+  name: "magical_market_entrence"
+  description: "You arrive at the Magic Market."
+  options:
+    - text: "continue"
+      effort_cost: 0
+      next_events:
+        - event_name: "forest_market_neutral"
+          prereqs: [["options['market_type'] == 'forest'", "options.__contains__('market_type') == False"]]
+          effects: ["options['market_type'] = 'forest'"]
+          weight: 50
+        - event_name: "city_market_neutral"
+          prereqs: [["options['market_type'] == 'city'", "options.__contains__('market_type') == False"]]
+          effects: ["options['market_type'] = 'city'"]
+          weight: 50
+
+
+forest_market_neutral:
+  name: "forest_market_neutral"
+  description: >
+    All around you is a mish-mash of cobbled stone and ancient forest, bustling with colorfully dressed people almost all in various kinds of robes and most wearing tall pointed hats.
+
+    Buildings of all sorts weave in and around giant trees. Some trees so large, they grow completely around the buildings, their roots curling around the walls before diving into the earth.
+
+    Little shops with peaked roofs, shingled in old wood. Stone towers spiraling into the canopy of leaves above you. Steeples jutting at impossible angles, some dangling over the rough stone pathway where people walk to and from shops. Little paths jut out between buildings and you can see even more little shops deeper into the forest.
+
+  options:
+    - text: ""
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: ""
+          weight: 100
+
+
+city_market_neutral:
+  name: "city_market_neutral"
+  description: >
+    All around you is a mish-mash of cobbled stone and ancient forest, bustling with colorfully dressed people almost all in various kinds of robes and most wearing tall pointed hats.
+
+    Buildings of all sorts weave in and around giant trees. Some trees so large, they grow completely around the buildings, their roots curling around the walls before diving into the earth.
+
+    Little shops with peaked roofs, shingled in old wood. Stone towers spiraling into the canopy of leaves above you. Steeples jutting at impossible angles, some dangling over the rough stone pathway where people walk to and from shops. Little paths jut out between buildings and you can see even more little shops deeper into the forest.
+
+  options:
+    - text: ""
+      effort_cost: 0
+      prereqs: [[]]
+      next_events:
+        - event_name: ""
+          weight: 100
+
+
+
 robe_store_awkward_silence:
   name: "robe_store_awkward_silence"
-  prereqs: [["current_location.contains('magicmarket')"], ["current_location.contains('robe_store')"], ["time:intro"]]
   description: "You stand in awkard silence with a few other students waiting to be measured for robes. To your right is <student.bully_1.physical_description>. To your left is <student.friendly_1.physical_description>."
   options:
     - text: "Wait silently for your turn."
@@ -8,36 +61,34 @@ robe_store_awkward_silence:
       prereqs: [[]]
       next_events:
         - event_name: "robe_store_fitting_finished"
-          chance: 50
+          weight: 50
         - event_name: "robe_store_fitting_bad"
-          chance: 25
+          weight: 25
         - event_name: "robe_store_jerk_1"
-          chance: 25
+          weight: 25
     - text: "Try to make conversation with the student on your right."
       effort_cost: 1
       prereqs: [["!past_events.contains.robe_store_jerk_1"]]
       next_events: 
         - event_name: "robe_store_jerk_1"
-          chance: 100
+          weight: 100
     - text: "Try to make conversation with the student on your left."
       effort_cost: 1
       prereqs: [[]]
       next_events:
         - event_name: "robe_store_friendly_1"
-          chance: 100
+          weight: 100
     - text: "Crack a joke."
       effort_cost: 2
       effects: ["student.bully_1.opinion.increase", "student.friendly_1.opinion.increase"]
       prereqs: [["character.trait.Funny", "character.trait.Charismatic"]]
       next_events:
         - event_name: "robe_store_friendly_all"
-          chance: 100
+          weight: 100
 
 
 robe_store_jerk_1:
   name: "robe_store_jerk_1"
-  prereqs: [["past_events.contains(robe_store_jerk_1) == False"], ["current_location.contains('magicmarket')"], ["current_location.contains('robe_store')"], ["time.contains('intro')"]]
-  
   description: >
     The person next to you begins talking.
     
@@ -49,34 +100,34 @@ robe_store_jerk_1:
       prereqs: [[]]
       next_events:
         - event_name: "robe_store_jerk_1_punched"
-          chance: 50
+          weight: 50
         - event_name: "robe_store_jerk_1_retaliates"
-          chance: 25
+          weight: 25
         - event_name: "robe_store_caught_thrown_out"
-          chance: 25
+          weight: 25
     - text: "Take the high ground and ignore them."
       effort_cost: 2
       prereqs: []
       next_events:
         - event_name: "robe_store_jerk_1_more_jerk"
-          chance: 25
+          weight: 25
         - event_name: "robe_store_jerk_1_caught_scolded"
-          chance: 50
+          weight: 50
         - event_name: "robe_store_jerk_1_caught_praised"
-          chance: 15
+          weight: 15
         - event_name: "robe_store_awkward_silence"
-          chance: 10
+          weight: 10
     - text: "Cry."
       effort_cost: 0
       prereqs: [[]]
       effects: ["student.bully_1.opinion.decrease"]
       next_events:
         - event_name: "robe_store_fitting_finished"
-          chance: 10
+          weight: 10
         - event_name: "robe_store_fitting_bad"
-          chance: 60
+          weight: 60
         - event_name: "robe_store_jerk_1_more_jerk"
-          chance: 10
+          weight: 10
         - event_name: "robe_store_jerk_1_caught_scolded"
-          chance: 20
+          weight: 20
 

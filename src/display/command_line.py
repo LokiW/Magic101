@@ -29,7 +29,9 @@ def display_default_event(event, game_state):
 		option = op_choice[selection]
 		if option.has_effects:
 			option.effects.execute_effects(game_state)
-		game_state.current_event = option.get_next_event(game_state)
+		next_event, effects = option.get_next_event(game_state)
+		effects.execute_effects(game_state)
+		game_state.current_event = next_event
 
 	# valid input options and func to call with input
 	return op_choice.keys(), output
@@ -77,7 +79,10 @@ def display_user_input_event(event, game_state):
 			return
 		if option.has_effects:
 			option.effects.execute_effects(game_state)
-		game_state.current_event = option.get_next_event(game_state)
+		next_event, effects = option.get_next_event(game_state)
+		effects.execute_effects(game_state)
+		game_state.current_event = next_event
+
 
 	return {}, output
 
@@ -88,8 +93,17 @@ def display_spell_event(event, game_state):
 
 
 def display_inventory(game_state):
-	# TODO
-	return
+	os.system('clear')
+	print("Inventory: \n")
+	for name, item in game_state.player.inventory.items.items():
+		display_name = item.display_name if item.display_name else name
+		print(str(item.quantity)+"    "+display_name)
+
+	print("\n\nPress enter to continue")
+	def output(selection):
+		return
+
+	return {}, output
 
 
 def insert_data_into_text(text, game_state):
