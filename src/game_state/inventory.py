@@ -1,5 +1,5 @@
 import json
-
+from error_handler import Error
 
 
 """
@@ -17,7 +17,7 @@ class Item():
 		self.attributes = attributes
 
 	def add_attribute(self, attribute):
-		self.attributes.add(attribute)
+		self.attributes.append(attribute)
 
 	def remove_attribute(self, attribute):
 		self.attribute.remove(attribute)
@@ -32,7 +32,7 @@ class Item():
 		reprd = {}
 		reprd['display_name'] = self.display_name
 		reprd['quantity'] = self.quantity
-		reprd['attributes'] = self.attributes
+		reprd['attributes'] = list(self.attributes)
 		return json.dumps(reprd)
 
 
@@ -46,7 +46,14 @@ class Inventory():
 		self.items[name] = Item(display_name, quantity, attributes)
 
 	def has_item(self, name):
+		Error.logln("has item: "+str(name in self.items))
 		return name in self.items
+
+	def display_item(self, name):
+		if name in self.items:
+			return self.items[name].display_name
+		Error.logln("Error: Request for item not in inventory: "+name)
+		return ""
 
 	def set_quantity(self, name, quantity=1):
 		if name not in self.items:
@@ -55,22 +62,24 @@ class Inventory():
 			self.items[name].quantity = quantity
 
 	def add_quantity(self, name, quantity):
+		Error.logln("Add "+str(quantity)+" "+name)
 		if name in self.items:
 			self.items[name].quantity += quantity
 
+	def get_quantity(self, name):
+		if name not in self.items:
+			return 0
+		return self.items[name].quantity
+
 	def subtract_quantity(self, name, quantity):
-		self.add_inventory_quantity(name, -1*quantity)
+		self.add_quantity(name, -1*quantity)
 
 	def has_quantity(self, name, quantity):
 		if name not in self.items:
 			# no item, only return true if quantity is 0
 			return quantity == 0
+		return self.items[name].quantity >= quantity
 
-		if quantity and self.items[name].quantity <= quantity:
-			return True
-
-		if not quantity and not self.items[name].quantity:
-			return True
 
 	def insufficient_quantity(self, name, quantity):
 		return name not in self.items or self.items[name].quantity < quantity

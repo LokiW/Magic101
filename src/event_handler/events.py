@@ -40,19 +40,23 @@ class Option:
 			self.effects = Effects(option["effects"])
 		self.prereqs = Prereqs([[]]) if "prereqs" not in option else Prereqs(option["prereqs"])
 
+		self.next_events = []
 		for e in option["next_events"]:
-			self.next_events = []
 			if e["event_name"] not in event_map:
 				event_map[e["event_name"]] = Event(name=e["event_name"])
+
 			ne_prereqs = Prereqs([[]]) if "prereqs" not in e else Prereqs(e["prereqs"])
 			ne_effects = Effects([]) if "effects" not in e else Effects(e["effects"])
-			self.next_events.append([e["weight"], ne_prereqs, ne_effects, event_map[e["event_name"]]])
+			ne = (e["weight"], ne_prereqs, ne_effects, event_map[e["event_name"]])
+			self.next_events.append(ne)
 
 	def get_next_event(self, game_state):
 		# chance = weight / sum( all weights)
 		total_weight = 0
 		weight_tuples = []
+		Error.logln("next events: "+str(len(self.next_events)))
 		for weight, prereqs, effects, event in self.next_events:
+			Error.logln("Evaluating next event option "+event.name)
 			if not event.is_initialized:
 				#TODO error handling
 				Error.logln("Error: event %s is uninitialized" % (event.name))

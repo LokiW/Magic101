@@ -1,0 +1,9 @@
+return_event:
+  name: "return_event"
+  description: "You should never reach this event, it is a placeholder for another event."
+  options:
+    - text: "Try again."
+      effort_cost: 0
+      next_events:
+        - event_name: "return_event"
+          weight: 10

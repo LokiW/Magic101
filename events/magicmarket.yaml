@@ -25,40 +25,385 @@ forest_market_neutral:
     Little shops with peaked roofs, shingled in old wood. Stone towers spiraling into the canopy of leaves above you. Steeples jutting at impossible angles, some dangling over the rough stone pathway where people walk to and from shops. Little paths jut out between buildings and you can see even more little shops deeper into the forest.
 
   options:
-    - text: ""
+    - text: "continue"
       effort_cost: 0
       prereqs: [[]]
       next_events:
-        - event_name: ""
+        - event_name: "magical_market_voluntary"
           weight: 100
 
 
 city_market_neutral:
   name: "city_market_neutral"
   description: >
-    All around you is a mish-mash of cobbled stone and ancient forest, bustling with colorfully dressed people almost all in various kinds of robes and most wearing tall pointed hats.
+    You find yourself in a large ornate town square with a massive fountain at its center. The water of the fountain defies gravity flowing in spirals up and down through the air, surrounding a two stone merfolk whose hands are clasped together at the center.
 
-    Buildings of all sorts weave in and around giant trees. Some trees so large, they grow completely around the buildings, their roots curling around the walls before diving into the earth.
+    The square is paved in stones of many shapes and colors and all around it are vibrant shops and stalls. Many stalls have chests and jars that rattle and shake of their own accord. One particularly loud stall seems to be covered from wheel to roof in plants that sing and sway to their own music.
 
-    Little shops with peaked roofs, shingled in old wood. Stone towers spiraling into the canopy of leaves above you. Steeples jutting at impossible angles, some dangling over the rough stone pathway where people walk to and from shops. Little paths jut out between buildings and you can see even more little shops deeper into the forest.
+    The shops themsevles are in building of all sizes. Some spiraling high into the air, with many chimneys jutting at odd angles out of them, while others are so small, they seem to barely fit their door between the buildings to either side. 
 
+    Little cobbled streets and alleys wind between the buildings like spokes off the square showing hints of even more shops down them.
+
+    The whole place is bustling with colorfully dressed people almost all in various kinds of robes and most wearing tall pointed hats.
   options:
-    - text: ""
+    - text: "continue"
       effort_cost: 0
       prereqs: [[]]
       next_events:
-        - event_name: ""
+        - event_name: "magical_market_voluntary"
           weight: 100
 
+magical_market_voluntary:
+  name: "magical_market_voluntary"
+  description: "What would you like to do at the Magic Market?"
+  options:
+    - text: "Go to robe shop."
+      effort_cost: 0
+      next_events:
+        - event_name: "forest_market_robe_store"
+          prereqs: [["options['market_type'] == 'forest'", "previous_events.__contains__('forest_market_robe_store')"]]
+          weight: 10
+        - event_name: "city_market_robe_store"
+          prereqs: [["options['market_type'] == 'city'", "previous_events.__contains__('city_market_robe_store')"]]
+          weight: 10
+    - text: "Go to used robe store."
+      effort_cost: 0
+      prereqs: [["player.traits['family_wealth'] == 'poor'", "previous_events.__contains__('used_robe_store')"], ["player.traits['raised_magically']", "previous_events.__contains__('used_robe_store')"]]
+      next_events:
+        - event_name: "used_robe_store"
+          weight: 1
 
+
+forest_market_robe_store:
+  name: "forest_market_robe_store"
+  description: "You find a shop completely encased in the roots of a large tree, with a door open at one of the hollows. Ouside the shop robes with no people dance about together, occasionally picking up their trim and showing off the flow of the garment as they twirl. Two robes sit in one of the branches holding a sign between them which reads: Robins's Regal Robes"
+  options:
+    - text: "Enter shop."
+      effort_cost: 0
+      next_events:
+        - event_name: "robe_store_wares"
+          weight: 1
+    - text: "Do something else."
+      effort_cost: 0
+      next_events:
+        - event_name: "magical_market_voluntary"
+          weight: 1
+
+city_market_robe_store:
+  name: "city_market_robe_store"
+  description: "You find a shop with large glass windows, behind which stand robes standing completely on their own as if worn by an invisible person. The robes move occasionally, making poses or picking up their trim and showing off the flow of the garment as they twirl. Above the door, large decrative ribbons float in the air spelling out: Robins's Regal Robes"
+  options:
+    - text: "Enter shop."
+      effort_cost: 0
+      next_events:
+        - event_name: "robe_store_wares"
+          weight: 1
+    - text: "Do something else."
+      effort_cost: 0
+      next_events:
+        - event_name: "magical_market_voluntary"
+          weight: 1
+
+
+robe_store_wares:
+  name: "robe_store_wares"
+  description: "You browse the robe store offerings, <<player.inventory.get_quantity('money')>> <<player.inventory.display_item('money')>> on hand."
+  options:
+    - text: "cost 100    Purchase a set of fancy full length school robes."
+      effort_cost: 0
+      prereqs: [["player.inventory.has_quantity('money', 100)"]]
+      next_events:
+        - event_name: "robe_store_awkward_silence"
+          prereqs: [["player.inventory.has_item('fancy_robes_full') == False"]]
+          effects: ["player.inventory.add_item('fancy_robes_full', 'Fancy Full Length Robes', 7, {'fancy', 'full_length'})", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 100)"]
+          weight: 10
+        - event_name: "robe_store_awkward_silence"
+          prereqs: [["player.inventory.has_item('fancy_robes_full')"]]
+          effects: ["player.inventory.add_quantity('fancy_robes_full', 7)", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 100)"]
+          weight: 10
+    - text: "cost 100    INSUFFICIENT FUNDS: Set of fancy full length school robes."
+      effort_cost: 0
+      prereqs: [["player.inventory.insufficient_quantity('money', 100)"]]
+      next_events:
+        - event_name: "robe_store_wares"
+          weight: 1
+    - text: "cost 100    Purchase a set of fancy athletic length school robes and breechers."
+      effort_cost: 0
+      prereqs: [["player.inventory.has_quantity('money', 100)"]]
+      next_events:
+        - event_name: "robe_store_awkward_silence"
+          prereqs: [["player.inventory.has_item('fancy_robes_athletic') == False"]]
+          effects: ["player.inventory.add_item('fancy_robes_athletic', 'Fancy Athletic Robes', 7, {'fancy', 'short_length'})", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 100)"]
+          weight: 10
+        - event_name: "robe_store_awkward_silence"
+          prereqs: [["player.inventory.has_item('robes_athletic')"]]
+          effects: ["player.inventory.add_quantity('robes_athletic', 7)", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 100)"]
+          weight: 10
+    - text: "cost 100    INSUFFICIENT FUNDS: Set of fancy athletic length school robes and breechers."
+      effort_cost: 0
+      prereqs: [["player.inventory.insufficient_quantity('money', 100)"]]
+      next_events:
+        - event_name: "robe_store_wares"
+          weight: 1
+    - text: "cost 20     Purchase a set of standard full length school robes."
+      effort_cost: 0
+      prereqs: [["player.inventory.has_quantity('money', 20)"]]
+      next_events:
+        - event_name: "robe_store_awkward_silence"
+          prereqs: [["player.inventory.has_item('robes_full') == False"]]
+          effects: ["player.inventory.add_item('robes_full', 'Full Length Robes', 7, {'full_length'})", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 20)"]
+          weight: 10
+        - event_name: "robe_store_awkward_silence"
+          prereqs: [["player.inventory.has_item('robes_full')"]]
+          effects: ["player.inventory.add_quantity('robes_full', 7)", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 20)"]
+          weight: 10
+    - text: "cost 20     INSUFFICIENT FUNDS: Set of standard full length school robes."
+      effort_cost: 0
+      prereqs: [["player.inventory.insufficient_quantity('money', 20)"]]
+      next_events:
+        - event_name: "robe_store_wares"
+          weight: 1
+    - text: "cost 20     Purchase a set of standard athletic length school robes and breechers."
+      effort_cost: 0
+      prereqs: [["player.inventory.has_quantity('money', 20)"]]
+      next_events:
+        - event_name: "robe_store_awkward_silence"
+          prereqs: [["player.inventory.has_item('robes_athletic') == False"]]
+          effects: ["player.inventory.add_item('robes_athletic', 'Athletic Robes', 7, {'short_length'})", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 20)"]
+          weight: 10
+        - event_name: "robe_store_awkward_silence"
+          prereqs: [["player.inventory.has_item('robes_athletic')"]]
+          effects: ["player.inventory.add_quantity('robes_athletic', 7)", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 20)"]
+          weight: 10
+    - text: "cost 20    INSUFFICIENT FUNDS: Set of fancy athletic length school robes and breechers."
+      effort_cost: 0
+      prereqs: [["player.inventory.insufficient_quantity('money', 20)"]]
+      next_events:
+        - event_name: "robe_store_wares"
+          weight: 1
+    - text: "Inquire about cheaper robes..."
+      effort_cost: 1
+      prereqs: [["player.traits['family_wealth'] == 'poor'"]]
+      next_events:
+        - event_name: "robe_store_cheaper_wares"
+          weight: 1
+    - text: "Inquire about cheaper robes..."
+      effort_cost: 3
+      prereqs: [["player.traits['family_wealth'] != 'poor'"]]
+      next_events:
+        - event_name: "robe_store_cheaper_wares"
+          weight: 1
+    - text: "Leave shop"
+      effort_cost: 0
+      next_events:
+        - event_name: "magical_market_voluntary"
+          weight: 1
+
+robe_store_cheaper_wares:
+  name: "robe_store_cheaper_wares"
+  description: "The robe store clerk gives you a nasty look, but begrudgingly gives more options.
+
+You have <<player.inventory.get_quantity('money')>> <<player.inventory.display_item('money')>> on hand."
+  options:
+    - text: "cost 10    Purchase a set of rejected full length robes returned by a previous customer."
+      effort_cost: 0
+      prereqs: [["player.inventory.has_quantity('money', 10)"]]
+      next_events:
+        - event_name: "confirm_purchase"
+          prereqs: [["player.inventory.has_item('robes_full') == False"]]
+          effects: ["player.inventory.add_item('robes_full', 'Full Length Robes', 7, {'full_length'})", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 15)"]
+          weight: 10
+        - event_name: "confirm_purchase"
+          prereqs: [["player.inventory.has_item('robes_full')"]]
+          effects: ["player.inventory.add_quantity('robes_full', 7)", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 15)"]
+          weight: 10
+    - text: "cost 15    INSUFFICIENT FUNDS: Set of rejected full length robes returned by a previous customer."
+      effort_cost: 0
+      prereqs: [["player.inventory.insufficient_quantity('money', 10)"]]
+      next_events:
+        - event_name: "robe_store_wares"
+          weight: 1
+    - text: "cost 15    Purchase a set of rejected athletic length robes returned by a previous customer."
+      effort_cost: 0
+      prereqs: [["player.inventory.has_quantity('money', 10)"]]
+      next_events:
+        - event_name: "confirm_purchase"
+          prereqs: [["player.inventory.has_item('robes_athletic') == False"]]
+          effects: ["player.inventory.add_item('robes_athletic', 'Athletic Robes', 7, {'short_length'})", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 15)"]
+          weight: 10
+        - event_name: "confirm_purchase"
+          prereqs: [["player.inventory.has_item('robes_athletic')"]]
+          effects: ["player.inventory.add_quantity('robes_athletic', 7)", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 15)"]
+          weight: 10
+    - text: "cost 15    INSUFFICIENT FUNDS: Set of rejected athletic length robes returned by a previous customer."
+      effort_cost: 0
+      prereqs: [["player.inventory.insufficient_quantity('money', 10)"]]
+      next_events:
+        - event_name: "robe_store_wares"
+          weight: 1
+    - text: "Follow robe store clerk's instructions for a used robes store..."
+      effort_cost: 0
+      prereqs: [["player.traits['family_wealth'] == 'poor'", "player.inventory.insufficient_quantity('money', 10)"]]
+      next_events:
+        - event_name: "used_robe_store"
+          weight: 1
+
+
+used_robe_store:
+  name: "used_robe_store"
+  description: "The used robes store is down two winding cobbled streets from the main street, and while the street outside is just as busy there is a quieter air about those coming and going. The shop itself is skinny but large, even from the outside you can see wracks of robes of varying degrees of wear lining the spiral staircase that circles the inside of the spirelike shop up high above and slightly bent over the shop next to it."
+  options:
+    - text: "Enter shop."
+      effort_cost: 0
+      next_events:
+        - event_name: "used_robe_store_wares"
+          weight: 1
+    - text: "Do something else."
+      effort_cost: 0
+      next_events:
+        - event_name: "magical_market_voluntary"
+          weight: 1
+
+
+used_robe_store_wares:
+  name: "used_robe_store_wares"
+  description: "'Come to me if you find anything you like,' a witch at the counter says as you enter without looking up from her book.
+
+You have <<player.inventory.get_quantity('money')>> <<player.inventory.display_item('money')>> on hand. (Press i to see current robes owned)."
+  options:
+    - text: "cost 10    Purchase a set (7)  of used full length robe in decent repair."
+      effort_cost: 0
+      prereqs: [["player.inventory.has_quantity('money', 10)"]]
+      next_events:
+        - event_name: "confirm_purchase"
+          prereqs: [["player.inventory.has_item('used_robes_full') == False"]]
+          effects: ["player.inventory.add_item('used_robes_full', 'Used Full Length Robes', 7, {'used', 'full_length'})", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 10)"]
+          weight: 10
+        - event_name: "confirm_purchase"
+          prereqs: [["player.inventory.has_item('used_robes_full')"]]
+          effects: ["player.inventory.add_quantity('used_robes_full', 7)", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 10)"]
+          weight: 10
+    - text: "cost 10    INSUFFICIENT FUNDS: A set (7) of full length robe in decent repair."
+      effort_cost: 0
+      prereqs: [["player.inventory.insufficient_quantity('money', 10)"]]
+      next_events:
+        - event_name: "used_robe_store_wares"
+          weight: 1
+    - text: "cost 10    Purchase a set (7) of used athletic length robe in decent repair."
+      effort_cost: 0
+      prereqs: [["player.inventory.has_quantity('money', 10)"]]
+      next_events:
+        - event_name: "confirm_purchase"
+          prereqs: [["player.inventory.has_item('used_robes_athletic') == False"]]
+          effects: ["player.inventory.add_item('used_robes_athletic', 'Used Athletic Robes', 7, {'used', 'short_length'})", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 10)"]
+          weight: 10
+        - event_name: "confirm_purchase"
+          prereqs: [["player.inventory.has_item('used_robes_athletic')"]]
+          effects: ["player.inventory.add_quantity('used_robes_athletic', 7)", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 10)"]
+          weight: 10
+    - text: "cost 10    INSUFFICIENT FUNDS A set (7) of athletic length robe in decent repair."
+      effort_cost: 0
+      prereqs: [["player.inventory.insufficient_quantity('money', 10)"]]
+      next_events:
+        - event_name: "used_robe_store_wares"
+          weight: 1
+    - text: "cost 2    Purchase a single used full length robe in decent repair."
+      effort_cost: 0
+      prereqs: [["player.inventory.has_quantity('money', 2)"]]
+      next_events:
+        - event_name: "confirm_purchase"
+          prereqs: [["player.inventory.has_item('used_robes_full') == False"]]
+          effects: ["player.inventory.add_item('used_robes_full', 'Used Full Length Robes', 1, {'used', 'full_length'})", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 2)"]
+          weight: 10
+        - event_name: "confirm_purchase"
+          prereqs: [["player.inventory.has_item('used_robes_full')"]]
+          effects: ["player.inventory.add_quantity('used_robes_full', 1)", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 2)"]
+          weight: 10
+        - event_name: "used_robe_store_wares"
+          weight: 1
+    - text: "cost 2    INSUFFICIENT FUNDS: A single full length robe in decent repair."
+      effort_cost: 0
+      prereqs: [["player.inventory.insufficient_quantity('money', 2)"]]
+      next_events:
+        - event_name: "used_robe_store_wares"
+          weight: 1
+    - text: "cost 2    Purchase a single used athletic length robe in decent repair."
+      effort_cost: 0
+      prereqs: [["player.inventory.has_quantity('money', 2)"]]
+      next_events:
+        - event_name: "confirm_purchase"
+          prereqs: [["player.inventory.has_item('used_robes_athletic') == False"]]
+          effects: ["player.inventory.add_item('used_robes_athletic', 'Used Athletic Robes', 1, {'used', 'short_length'})", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 2)"]
+          weight: 10
+        - event_name: "confirm_purchase"
+          prereqs: [["player.inventory.has_item('used_robes_athletic')"]]
+          effects: ["player.inventory.add_quantity('used_robes_athletic', 1)", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 2)"]
+          weight: 10
+    - text: "cost 2    INSUFFICIENT FUNDS: A single athletic length robe in decent repair."
+      effort_cost: 0
+      prereqs: [["player.inventory.insufficient_quantity('money', 2)"]]
+      next_events:
+        - event_name: "used_robe_store_wares"
+          weight: 1
+    - text: "cost 1    Purchase a single used full length robe in bad repair."
+      effort_cost: 0
+      prereqs: [["player.inventory.has_quantity('money', 1)"]]
+      next_events:
+        - event_name: "confirm_purchase"
+          prereqs: [["player.inventory.has_item('ratty_robes_full') == False"]]
+          effects: ["player.inventory.add_item('ratty_robes_full', 'Ratty Full Length Robes', 1, {'ratty', 'full_length'})", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 1)"]
+          weight: 10
+        - event_name: "confirm_purchase"
+          prereqs: [["player.inventory.has_item('ratty_robes_full')"]]
+          effects: ["player.inventory.add_quantity('ratty_robes_full', 1)", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 1)"]
+          weight: 10
+    - text: "cost 1    INSUFFICIENT FUNDS: A single full length robe in bad repair."
+      effort_cost: 0
+      prereqs: [["player.inventory.insufficient_quantity('money', 1)"]]
+      next_events:
+        - event_name: "used_robe_store_wares"
+          weight: 1
+    - text: "cost 1    Purchase a single used athletic length robe in bad repair."
+      effort_cost: 0
+      prereqs: [["player.inventory.has_quantity('money', 1)"]]
+      next_events:
+        - event_name: "confirm_purchase"
+          prereqs: [["player.inventory.has_item('ratty_robes_athletic') == False"]]
+          effects: ["player.inventory.add_item('ratty_robes_athletic', 'Ratty Athletic Robes', 1, {'ratty', 'short_length'})", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 1)"]
+          weight: 10
+        - event_name: "confirm_purchase"
+          prereqs: [["player.inventory.has_item('ratty_robes_athletic')"]]
+          effects: ["player.inventory.add_quantity('ratty_robes_athletic', 1)", "add_self_to_return_events()", "player.inventory.subtract_quantity('money', 1)"]
+          weight: 10
+
+    - text: "cost 1    INSUFFICIENT FUNDS: A single athletic length robe in bad repair."
+      effort_cost: 0
+      prereqs: [["player.inventory.insufficient_quantity('money', 1)"]]
+      next_events:
+        - event_name: "used_robe_store_wares"
+          weight: 1
+    - text: "Leave shop."
+      effort_cost: 0
+      next_events:
+        - event_name: "magical_market_voluntary"
+          weight: 1
+
+confirm_purchase:
+  name: "confirm_purchase"
+  description: "You purchased an item!"
+  options:
+    - text: "continue."
+      effort_cost: 0
+      next_events:
+        - event_name: "return_event"
+          weight: 1
 
 robe_store_awkward_silence:
   name: "robe_store_awkward_silence"
-  description: "You stand in awkard silence with a few other students waiting to be measured for robes. To your right is <student.bully_1.physical_description>. To your left is <student.friendly_1.physical_description>."
+  description: "You stand in awkard silence with a few other students waiting to be measured for robes. To your right is <<student.bully_1.physical_description>>. To your left is <<student.friendly_1.physical_description>>."
   options:
     - text: "Wait silently for your turn."
       effort_cost: 0
-      prereqs: [[]]
       next_events:
         - event_name: "robe_store_fitting_finished"
           weight: 50

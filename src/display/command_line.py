@@ -2,6 +2,8 @@ import os
 import re
 from error_handler import Error
 
+RETURN_EVENT = "return_event"
+
 
 def display_event(event, game_state):
 	os.system('clear')
@@ -31,6 +33,8 @@ def display_default_event(event, game_state):
 			option.effects.execute_effects(game_state)
 		next_event, effects = option.get_next_event(game_state)
 		effects.execute_effects(game_state)
+		if next_event.name == RETURN_EVENT:
+			next_event = game_state.return_events.pop()
 		game_state.current_event = next_event
 
 	# valid input options and func to call with input
@@ -81,8 +85,9 @@ def display_user_input_event(event, game_state):
 			option.effects.execute_effects(game_state)
 		next_event, effects = option.get_next_event(game_state)
 		effects.execute_effects(game_state)
+		if next_event.name == RETURN_EVENT:
+			next_event = game_state.return_events.pop()
 		game_state.current_event = next_event
-
 
 	return {}, output
 
@@ -108,13 +113,14 @@ def display_inventory(game_state):
 
 def insert_data_into_text(text, game_state):
 	# replace instances of <<val>> with value of game_state.val in given text
-	to_replace = re.findall(r'<<.*>>', text)
+	to_replace = re.findall(r'<<[^<]*>>', text)
 	output = text
 	for replacement in to_replace:
 		replace_code = replacement[2:-2]
 		replace_val = ""
 		try:
-			replace_val = game_state.get_value(replace_code)
+			#replace_val = game_state.get_value(replace_code)
+			replace_val = str(eval("game_state."+replace_code))
 		except Exception as e:
 			Error.logln("could not replace variable in given text "+text+" due to "+str(e))
 		output = output.replace(replacement, replace_val)

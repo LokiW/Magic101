@@ -12,7 +12,7 @@ save_dir = "/save_files"
 file_path = os.getcwd() + save_dir + "/"
 
 class GameState:
-	def __init__(self, player, current_event, current_location, characters, magic_system, seed, options=[], prev_events=set(), last_input=""):
+	def __init__(self, player, current_event, current_location, characters, magic_system, seed, options=[], prev_events=set(), last_input="", return_events=[]):
 		self.player = player
 		self.current_event = current_event
 		self.current_location = current_location
@@ -24,6 +24,7 @@ class GameState:
 		self.options = options
 		self.ready = True
 		self.last_user_input = last_input
+		self.return_events = return_events
 
 
 	"""
@@ -49,6 +50,11 @@ class GameState:
 			to_get = getattr(to_get, val)
 		return to_get
 
+	def clear_return_events(self):
+		self.return_events = []
+
+	def add_self_to_return_events(self):
+		self.return_events.append(self.current_event)
 
 	def __repr__(self):
 		reprd = {}
@@ -58,6 +64,11 @@ class GameState:
 		reprd['seed'] = self.seed
 		reprd['last_user_input'] = self.last_user_input
 		reprd['previous_events'] = json.dumps(list(self.previous_events))
+		reprd['return_events'] = []
+		for r_event in self.return_events:
+			reprd['return_events'].append(r_event.name)
+		reprd['return_events'] = json.dumps(reprd['return_events'])
+		reprd['options'] = json.dumps(self.options)
 		#TODO the rest
 		return json.dumps(reprd)
 
@@ -89,12 +100,17 @@ class GameState:
 		for p_event in json.loads(load_info['previous_events']):
 			previous_events.add(p_event)
 
+		#TODO make sure stack order is preserved
+		return_events = []
+		for r_event in json.loads(load_info['return_events']):
+			return_events.append(event_map[r_event])
+
 		last_user_input = load_info['last_user_input']
 
 		characters = None
 		magic_system = None
 		seed = load_info['seed']
 		# loaded options override any values in default options if in this order
-		# options = {**default_options, **json.loads(load_info['options'])}
-		options = default_options
-		return GameState(player, current_event, current_location, characters, magic_system, seed, options, previous_events, last_user_input)
+		options = {**default_options, **json.loads(load_info['options'])}
+		# options = default_options
+		return GameState(player, current_event, current_location, characters, magic_system, seed, options, previous_events, last_user_input, return_events)
