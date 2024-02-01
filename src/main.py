@@ -7,7 +7,9 @@ from display.command_line import display_inventory
 from game_state.game_state import GameState
 from game_state.load_default_yamls import load_options
 from game_state.location import Location
-from characters.player import Player
+from game_state.seed import Seed
+from characters.character import Character
+from characters.load_character_yamls import load_characters
 from error_handler import Error
 
 
@@ -38,20 +40,19 @@ def main():
 def new_game():
 	event_map = load_event_yamls()
 	current_event = event_map[FIRST_EVENT]
+	options = load_options()
 
-	current_location = Location({"start"}) 
+	seed = Seed("traditional", True)
+
 	# TODO load characters
-	characters = None
+	characters = load_characters(seed)
+
 	# TODO generate magic system
 	magic_system = None
-	player = Player()
+	player = Character()
+	player.location = Location({"start"})
 
-	#TODO seed
-	seed = "traditional"
-
-	options = load_options()
-	
-	return GameState(player, current_event, current_location, characters, magic_system, seed, options)
+	return GameState(player, current_event, characters, magic_system, seed, options)
 
 
 def load_game():

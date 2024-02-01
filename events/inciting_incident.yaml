@@ -4,7 +4,7 @@ inciting_incident:
   options:
     - text: "It is probably meant for someone else. Leave the scroll and keep walking."
       effort_cost: 0
-      prereqs: [["options['forest_child']['enabled']"]]
+      prereqs: [["options['forest_child']"]]
       next_events:
         - event_name: "followed_by_scroll_1"
           weight: 100

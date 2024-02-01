@@ -10,6 +10,9 @@ class Error():
 		file.write("Begin Error Log:\n")
 		file.close()
 
+	def debug(text):
+		Error.log("%%DEBUT%%"+text+"\n")
+
 	def logln(text):
 		Error.log(text+"\n")
 

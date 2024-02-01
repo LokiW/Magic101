@@ -400,7 +400,7 @@ confirm_purchase:
 
 robe_store_awkward_silence:
   name: "robe_store_awkward_silence"
-  description: "You stand in awkard silence with a few other students waiting to be measured for robes. To your right is <<student.bully_1.physical_description>>. To your left is <<student.friendly_1.physical_description>>."
+  description: "You stand in awkard silence with a few other students waiting to be measured for robes. To your right is <<characters['student']['bully_1'].physical_description>>. To your left is <<characters['student']['friendly_1'].physical_description>>."
   options:
     - text: "Wait silently for your turn."
       effort_cost: 0
@@ -425,7 +425,7 @@ robe_store_awkward_silence:
           weight: 100
     - text: "Crack a joke."
       effort_cost: 2
-      effects: ["student.bully_1.opinion.increase", "student.friendly_1.opinion.increase"]
+      effects: ["characters['student']['bully_1'].opinion += 1", "characters['student']['friendly_1'].opinion += 1"]
       prereqs: [["character.trait.Funny", "character.trait.Charismatic"]]
       next_events:
         - event_name: "robe_store_friendly_all"
@@ -437,11 +437,11 @@ robe_store_jerk_1:
   description: >
     The person next to you begins talking.
     
-    "<student.bully_1.dialogue.insult>" they say 
+    "<characters['student']['bully_1'].dialogue.insult>" they say 
   options:
     - text: "Punch them."
       effort_cost: 1
-      effects: ["student.bully_1.opinion.increase"]
+      effects: ["characters['student']['bully_1'].opinion += 1"]
       prereqs: [[]]
       next_events:
         - event_name: "robe_store_jerk_1_punched"
@@ -465,7 +465,7 @@ robe_store_jerk_1:
     - text: "Cry."
       effort_cost: 0
       prereqs: [[]]
-      effects: ["student.bully_1.opinion.decrease"]
+      effects: ["characters['student']['bully_1'].opinion -= decrease"]
       next_events:
         - event_name: "robe_store_fitting_finished"
           weight: 10

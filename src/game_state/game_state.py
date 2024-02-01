@@ -2,9 +2,11 @@ import os
 import yaml
 import json
 import random
-from characters.player import Player
+from characters.character import Character
+from characters.load_character_yamls import load_characters
 from game_state.location import Location
 from game_state.inventory import Item
+from game_state.seed import Seed
 from error_handler import Error
 
 
@@ -12,15 +14,13 @@ save_dir = "/save_files"
 file_path = os.getcwd() + save_dir + "/"
 
 class GameState:
-	def __init__(self, player, current_event, current_location, characters, magic_system, seed, options=[], prev_events=set(), last_input="", return_events=[]):
+	def __init__(self, player, current_event, characters, magic_system, seed, options=[], prev_events=set(), last_input="", return_events=[]):
 		self.player = player
 		self.current_event = current_event
-		self.current_location = current_location
 		self.previous_events = prev_events
 		self.characters = characters
 		self.magic_system = magic_system
 		self.seed = seed
-		self.rng = random.Random(seed)
 		self.options = options
 		self.ready = True
 		self.last_user_input = last_input
@@ -59,9 +59,8 @@ class GameState:
 	def __repr__(self):
 		reprd = {}
 		reprd['player'] = self.player.__repr__()
-		reprd['current_location'] = self.current_location.__repr__()
 		reprd['current_event_name'] = self.current_event.name
-		reprd['seed'] = self.seed
+		reprd['seed'] = self.seed.__repr__()
 		reprd['last_user_input'] = self.last_user_input
 		reprd['previous_events'] = json.dumps(list(self.previous_events))
 		reprd['return_events'] = []
@@ -69,6 +68,15 @@ class GameState:
 			reprd['return_events'].append(r_event.name)
 		reprd['return_events'] = json.dumps(reprd['return_events'])
 		reprd['options'] = json.dumps(self.options)
+
+		reprd['characters'] = {}
+		for ch_type, sub_characters in self.characters.items():
+			reprd['characters'][ch_type] = {}
+			for character_id, character in sub_characters.items():
+				#TODO only save/load updated characters
+				reprd['characters'][ch_type][character_id] = character.__repr__()
+		reprd['characters'] = json.dumps(reprd['characters'])
+
 		#TODO the rest
 		return json.dumps(reprd)
 
@@ -80,7 +88,7 @@ class GameState:
 		if not os.path.exists(file_path):
 			os.mkdir(file_path)
 	
-		self.save_file = open(file_path+self.player.name+"_"+self.seed+".yaml", "w")
+		self.save_file = open(file_path+self.player.name+"_"+self.seed.get_seed()+".yaml", "w")
 		yaml.safe_dump(self.__repr__(), self.save_file)
 		self.save_file.close()
 
@@ -89,12 +97,9 @@ class GameState:
 
 		load_info = json.loads(yaml.safe_load(save_file))
 
-		player = Player()
-		player.load(json.loads(load_info['player']))
+		player = Character.load(json.loads(load_info['player']))
 
 		current_event = event_map[load_info['current_event_name']]
-
-		current_location = Location(set(json.loads(load_info['current_location'])))
 
 		previous_events = set()
 		for p_event in json.loads(load_info['previous_events']):
@@ -107,10 +112,19 @@ class GameState:
 
 		last_user_input = load_info['last_user_input']
 
-		characters = None
+		seed = Seed.load(load_info['seed'])
+
+		characters = {}
+		character_info = json.loads(load_info['characters'])
+		for ch_type, sub_characters in character_info.items():
+			if ch_type not in characters:
+				characters[ch_type] = {}
+			for character_id, ch_yaml in sub_characters.items():
+				characters[ch_type][character_id] = Character.load(json.loads(ch_yaml))
+
+		#TODO
 		magic_system = None
-		seed = load_info['seed']
 		# loaded options override any values in default options if in this order
 		options = {**default_options, **json.loads(load_info['options'])}
 		# options = default_options
-		return GameState(player, current_event, current_location, characters, magic_system, seed, options, previous_events, last_user_input, return_events)
+		return GameState(player, current_event, characters, magic_system, seed, options, previous_events, last_user_input, return_events)

@@ -1,0 +1,30 @@
+bully_student_1:
+  id: "bully_1"
+  type: "student"
+  first_name: "<<first_name>>"
+  last_name: "<<last_name>>"
+  physical_description: "<<physical_description>>"
+  hair: "<<hair.length>> <<hair.shape>> <<hair.color>>"
+  eyes: "<<eyes.color>>"
+  traits:
+    demeanor: "Bully"
+    dialect: "news_broadcaster"
+    morning_schedule: 1
+    afternoon_schedule: 2
+    school_house: 4
+  opinion: -1
+
+friendly_student_1:
+  id: "friendly_1"
+  type: "student"
+  first_name: "<<first_name>>"
+  last_name: "<<last_name>>"
+  nickname: "<<nickname>>"
+  physical_description: "<<physical_description>>"
+  hair: "<<hair.length>> <<hair.shape>> <<hair.color>>"
+  eyes: "<<eyes.shape>>, <<eyes.color>>"
+  traits:
+    demeanor: "Friendly"
+    school_house: 2
+  opinion: 0
+

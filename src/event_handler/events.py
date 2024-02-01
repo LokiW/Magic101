@@ -65,7 +65,7 @@ class Option:
 				total_weight += weight
 				weight_tuples.append((weight, event, effects))
 
-		percent = game_state.rng.randrange(0,total_weight)
+		percent = game_state.seed.rng.randrange(0,total_weight)
 		current_weight = 0
 		for weight, event, effects in weight_tuples:
 			current_weight += weight

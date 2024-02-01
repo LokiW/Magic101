@@ -16,7 +16,7 @@ recieve_school_acceptance:
   options:
     - text: "Leave scroll and ignore it."
       effort_cost: 0
-      prereqs: [["options['forest_child']['enabled']"]]
+      prereqs: [["options['forest_child']"]]
       next_events:
         - event_name: "transported_to_school_unwilling"
           weight: 100
@@ -46,7 +46,7 @@ wishing_well_confident:
     - text: "continue"
       effort_cost: 0
       prereqs: [[]]
-      effects: ["current_location.set_location('magicmarket')"]
+      effects: ["player.location.set_location('magicmarket')"]
       next_events:
         - event_name: "magical_market_entrence"
           weight: 100
@@ -64,7 +64,7 @@ As you watch, the pool of the fountain begins to spin and the water emits a stra
     - text: ""
       effort_cost: 0
       prereqs: [[]]
-      effects: ["current_location.set_location('magicmarket')"]
+      effects: ["player.location.set_location('magicmarket')"]
       next_events:
         - event_name: "magical_market_entrence"
           weight: 100

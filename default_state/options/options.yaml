@@ -1,3 +1,2 @@
 options:
-  forest_child:
-    enabled: False
+  forest_child: False

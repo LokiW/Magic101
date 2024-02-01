@@ -1,0 +1,32 @@
+npc:
+  id: "npc"
+  type: "npc"
+  first_name: "<<first_name>>"
+  last_name: "<<last_name>>"
+  physical_description: "<<physical_description>>"
+  hair: "<<hair.length>>, <<hair.shape>>, <<hair.color>>"
+  eyes: "<<eyes.color>>"
+  traits:
+    family_wealth: "mid"
+    magical_upbringing: True
+    school_house: "<<house_2>>"
+    dialect: "news broadcaster"
+  opinion: 0
+
+
+player:
+  id: "player"
+  type: "player"
+  physical_description: "<<physical_description>>"
+  hair: "<<hair.length>>, <<hair.shape>>, <<hair.color>>"
+  eyes: "<<eyes.shape>>, <<eyes.color>>"
+  location:
+    - "start"
+  traits:
+    family_wealth: "mid"
+    magical_upbringing: False
+  inventory:
+    - item_name: "money"
+      display_name: "<<money>>"
+      quantity: 100
+

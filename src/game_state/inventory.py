@@ -97,6 +97,11 @@ class Inventory():
 			return False
 		return self.items[name].has_attribute(attribute)
 
+	def set_default(self, default):
+		for name, item in default.items.items():
+			if name not in self.items:
+				self.items[name] = item
+
 	def load(self, reprd):
 		for name, item in reprd.items():
 			self.items[name] = Item.load(json.loads(item))
@@ -106,4 +111,12 @@ class Inventory():
 		for name, item in self.items.items():
 			reprd[name] = item.__repr__()
 		return json.dumps(reprd)
-	
+
+	def get_from_yaml(seed, in_yaml):
+		items = {}
+		for i in in_yaml:
+			disp = seed.replace_values(i["display_name"]) if "display_name" in i else i["item_name"]
+			quantity = i["quantity"]
+			attributes = seed.replace_values(i["attrbutes"]) if "attributes" in i else []
+			items[i["item_name"]] = Item(disp, quantity, attributes)
+		return Inventory(items)

@@ -1,0 +1,74 @@
+first_name:
+  - "Aloani"
+  - "Bexik"
+  - "Cail"
+  - "Dreshne"
+  - "Esnell"
+last_name:
+  - "White"
+  - "Black"
+  - "Green"
+  - "Blue"
+  - "Teal"
+  - "Red"
+hair:
+  shape:
+    - "curly"
+    - "straight"
+  color:
+    - "brown"
+    - "black"
+    - "blond"
+    - "red"
+  length:
+    - "long"
+    - "short"
+eyes:
+  shape:
+    - "almond"
+    - "round"
+  color:
+    - "brown"
+    - "green"
+    - "blue"
+    - "grey"
+physical_description:
+  - "tall and thin, with delecate look"
+  - "short and cherubish"
+  - "top heavy"
+  - "athletic looking"
+house_1: "Owl Eyes"
+house_2: "Cat's Paws"
+house_3: "Snake Toungues"
+house_4: "Wolf's Ears"
+classes:
+  - name: "potions"
+    class_id: 1
+    classification: "combiner"
+    spell_list:
+     - "transmute"
+     - "cures"
+    ingrediants:
+     - "plants"
+     - "bugs"
+     - "animal parts"
+  - name: "charms"
+    class_id: 2
+    classification: "combiner"
+    spell_list:
+     - "motion"
+    ingrediants:
+     - "wand"
+     - "sceptor"
+     - "staff"
+  - name: "herbalism"
+    class_id: 3
+    classification: "ingrediants"
+    ingrediants:
+     - "plants"
+  - name: "crystals"
+    class_id: 4
+    classification: "ingrediants"
+    ingrediants:
+     - "crstals"
+money: "gold"

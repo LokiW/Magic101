@@ -19,6 +19,19 @@ def load_options():
 				options.update(yaml.safe_load(file)["options"])
 	return options
 
+
+def load_seed_data(seed):
+	options = {}
+	op_dir = root_dir+"/seed/"
+	for filepath in os.listdir(op_dir):
+		if filepath in excluded_option_files or not filepath.endswith(".yaml"):
+			Error.logln("skipping seed file " + filepath)
+		else:
+			Error.logln("loading seed data in "+ filepath)
+			with open(op_dir+filepath, 'r') as file:
+				seed.load_data(filepath, yaml.safe_load(file))
+
+
 """
 	with open(root_dir + "/" + "options.yaml", "r") as file:
 		return yaml.safe_load(file)["options"]

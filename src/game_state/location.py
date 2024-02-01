@@ -17,5 +17,8 @@ class Location():
 	def remove(self, location):
 		self.locations.remove(location)
 
+	def load(reprd):
+		return Location(set(reprd))
+
 	def __repr__(self):
 		return json.dumps(list(self.locations))
